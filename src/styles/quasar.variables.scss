@@ -1,0 +1,42 @@
+// It's highly recommended to change the default colors
+// to match your app's branding.
+
+@import '~quasar-variables-styl';
+
+$typography-font-family: 'Poppins', sans-serif;
+
+// Max width at which point
+// current size ends
+$breakpoint-xs: 320px;
+$breakpoint-sm: 480px;
+$breakpoint-md: 670px;
+$breakpoint-lg: 980px;
+
+$primary: linear-gradient(244.38deg, #9ee8ff 8.14%, #5aceff 27.9%, #79afff 56.94%, #2d5fde 84.11%);
+$secondary: #e5e5e5;
+$accent: #373737;
+$blue: #3894d2;
+$dark-page: $blue-grey-8;
+$dark: linear-gradient(166.34deg, #373737 0%, #252628 22.9%, #000309 100%);
+
+$positive: #21ba45;
+$negative: #c10015;
+$btn: rgba(255, 255, 255, 0.3);
+$btn-dark: rgba(5, 5, 5, 0.3);
+$warning: #f2c037;
+
+$body-font-size: 26px;
+$body-font-weight: 600;
+
+$input-font-size: 22px;
+$input-line-height: 1.3;
+$input-text-color: $accent;
+$input-label-color: $accent;
+$input-autofill-color: inherit;
+
+$button-font-size: 26px;
+$button-font-family: 'Poppins', sans-serif;
+$button-font-weight: 600;
+$button-dense-padding: 0.5em;
+$button-line-height: 1.5;
+$button-shadow: $shadow-2;
