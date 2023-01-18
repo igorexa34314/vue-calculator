@@ -1,8 +1,7 @@
 <template>
 	<q-list v-if="exprItems.length > 0" class="expr-list q-py-sm">
 		<expr-item v-for="(exprItem, index) in exprItems" :exprItem="exprItem" :key="index"
-			@runProblem="exprItem => $emit('runProblem', exprItem)"
-			@deleteProblem="exprItem => $emit('deleteProblem', exprItem)" />
+			@runItem="exprItem => $emit('runItem', exprItem)" @deleteItem="exprItem => $emit('deleteItem', exprItem)" />
 	</q-list>
 	<div class="q-pa-xl" v-else>You have no history</div>
 </template>
@@ -28,7 +27,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 // .expr {
 // 	&-list {}
 // }

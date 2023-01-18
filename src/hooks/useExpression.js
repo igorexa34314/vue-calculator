@@ -4,7 +4,7 @@ import { evaluate, round } from 'mathjs';
 
 import { useStore } from 'vuex';
 
-export function useExpr() {
+export function useExpression() {
 	const store = useStore();
 
 	const operators = ['*', '/', '-', '+', '='];
@@ -105,9 +105,9 @@ export function useExpr() {
 		}
 	};
 
-	const showExpr = expr => {
-		expr.problem = expr.problem;
-		expr.result = expr.result;
+	const showExpr = ex => {
+		expr.problem = ex.problem;
+		expr.result = ex.result;
 	};
 
 	const deleteExpr = exprItem => {

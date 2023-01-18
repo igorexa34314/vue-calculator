@@ -2,8 +2,8 @@
 	<q-drawer v-model="drawerOpen" class="bg-sidebar" side="right" :width="450" :breakpoint="1024" overlay elevated
 		persistent>
 		<q-scroll-area class="fit">
-			<ExprList :exprItems="historyData" @deleteProblem="exprItem => { $emit('deleteProblem', exprItem) }"
-				@runProblem="exprItem => { $emit('runProblem', exprItem) }" />
+			<ExprList :exprItems="historyData" @deleteItem="exprItem => { $emit('deleteItem', exprItem) }"
+				@runItem="exprItem => { $emit('runItem', exprItem) }" />
 		</q-scroll-area>
 	</q-drawer>
 </template>
@@ -39,14 +39,14 @@ export default {
 		}
 
 		return {
-			drawerOpen, toggleDrawer
+			drawerOpen, toggleDrawer,
 		}
 	},
 	name: 'history-sidebar',
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .body--dark {
 	.bg-sidebar {
 		background-color: rgba(51, 38, 38, 0.5);

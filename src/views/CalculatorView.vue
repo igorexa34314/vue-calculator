@@ -1,6 +1,6 @@
 <template>
-	<HistorySidebar :historyData="getProblemItems" v-model:drawer="drawer" @deleteProblem="deleteExpr"
-		@runProblem="showExpr" />
+	<HistorySidebar :historyData="getProblemItems" v-model:drawer="drawer" @deleteItem="deleteExpr"
+		@runItem="showExpr" />
 	<div class="calculator">
 		<div class="calculator__container container">
 			<div class="calculator__header row wrap items-center justify-center q-gutter-y-md">
@@ -50,7 +50,7 @@ import { ref, computed, watch } from 'vue';
 
 import { useStore } from 'vuex';
 
-import { useExpr } from '@/hooks/useExpr';
+import { useExpression } from '@/hooks/useExpression';
 import { useDarkMode } from '@/hooks/useDarkMode';
 
 export default {
@@ -83,7 +83,7 @@ export default {
 
 		watch(activeTab, newValue => localStorage.setItem('activeTab', JSON.stringify(newValue)));
 
-		const { expr, enterCharacter, showExpr, deleteExpr } = useExpr();
+		const { expr, enterCharacter, showExpr, deleteExpr } = useExpression();
 
 		return {
 			darkMode,

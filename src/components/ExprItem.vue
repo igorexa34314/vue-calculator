@@ -1,6 +1,6 @@
 <template>
 	<q-item clickable class="expr-item q-pa-sm">
-		<q-item-section v-ripple class="q-pa-md" @click="$emit('runProblem', exprItem)">
+		<q-item-section v-ripple class="q-pa-md" @click="$emit('runItem', exprItem)">
 			<q-item-label lines="2" class="expr-item__problem q-mb-xs">{{ exprItem.problem + ' = ' }}</q-item-label>
 			<q-item-label lines="1" class="expr-item__result">{{ exprItem.result }}</q-item-label>
 		</q-item-section>
@@ -12,7 +12,7 @@
 		</q-item-section>
 		<q-item-section side>
 			<q-btn flat rounded text-color="icons" padding="sm" dense icon="delete"
-				@click="$emit('deleteProblem', exprItem)" />
+				@click="$emit('deleteItem', exprItem)" />
 		</q-item-section>
 	</q-item>
 </template>
