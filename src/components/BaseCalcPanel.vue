@@ -18,22 +18,14 @@
 	</div>
 </template>
 
-<script>
+<script setup>
+const emit = defineEmits(['enterCharacter']);
 
-export default {
-	setup(props, { emit }) {
-		const actions = ['AC', '+/-', '%'];
-		const operators = ['×', '÷', '-', '+', '='];
-		const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '00'];
+const actions = ['AC', '+/-', '%'];
+const operators = ['×', '÷', '-', '+', '='];
+const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '00'];
 
-		const enterCharacter = character => emit('enterCharacter', character);
-
-		return {
-			actions, operators, numbers, enterCharacter,
-		}
-	},
-	name: 'base-calc-panel',
-}
+const enterCharacter = character => emit('enterCharacter', character);
 </script>
 
 <style lang="scss">

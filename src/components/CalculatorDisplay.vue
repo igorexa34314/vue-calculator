@@ -13,34 +13,28 @@
 	</div>
 </template>
 
-<script>
+<script setup>
 import { computed } from 'vue';
 
-export default {
-	props: {
-		modelValue: {
-			type: Object,
-			default: () => ({}),
-		},
-		freeMode: {
-			type: Boolean,
-			default: false,
-		},
+const props = defineProps({
+	modelValue: {
+		type: Object,
+		default: () => ({}),
 	},
-	setup(props, { emit }) {
-		const exprValue = computed({
-			get: () => props.modelValue,
-			set: value => {
-				emit('update:modelValue', value);
-			},
-		})
+	freeMode: {
+		type: Boolean,
+		default: false,
+	},
+});
 
-		return {
-			exprValue,
-		}
+const emit = defineEmits(['update:modelValue']);
+
+const exprValue = computed({
+	get: () => props.modelValue,
+	set: value => {
+		emit('update:modelValue', value);
 	},
-	name: 'calculator-display',
-}
+})
 </script>
 
 <style lang="scss">

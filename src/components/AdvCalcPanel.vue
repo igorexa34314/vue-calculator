@@ -25,28 +25,20 @@
 	</div>
 </template>
 
-<script>
+<script setup>
+const emit = defineEmits(['enterCharacter']);
 
-export default {
-	setup(props, { emit }) {
-		const actions = ['AC', 'bs', 'e'];
-		const operators = [
-			{ name: 'sqrt', icon: 'fa-solid fa-square-root-variable' },
-			{ name: '^', icon: 'fa-solid fa-angle-up' },
-			{ name: 'log', icon: '' },
-			{ name: 'exp', icon: '' },
-		];
-		const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '(', ')'];
-		const trigonometry = ['sin', 'cos', 'tan', '='];
+const actions = ['AC', 'bs', 'e'];
+const operators = [
+	{ name: 'sqrt', icon: 'fa-solid fa-square-root-variable' },
+	{ name: '^', icon: 'fa-solid fa-angle-up' },
+	{ name: 'log', icon: '' },
+	{ name: 'exp', icon: '' },
+];
+const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '(', ')'];
+const trigonometry = ['sin', 'cos', 'tan', '='];
 
-		const enterCharacter = character => emit('enterCharacter', character);
-
-		return {
-			actions, operators, numbers, trigonometry, enterCharacter
-		}
-	},
-	name: 'adv-calc-panel',
-}
+const enterCharacter = character => emit('enterCharacter', character);
 </script>
 
 <style lang="scss">

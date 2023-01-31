@@ -17,36 +17,28 @@
 	</q-item>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
 
-export default {
-	props: {
-		exprItem: {
-			type: Object,
-			required: true,
-		},
+const props = defineProps({
+	exprItem: {
+		type: Object,
+		required: true,
 	},
-	setup() {
-		const copyMessage = ref(null);
+});
 
-		const copyProblem = async exprItem => {
-			try {
-				await navigator.clipboard.writeText(exprItem.problem + ' = ' + exprItem.result);
-				console.log('Content copied to clipboard: ' + exprItem.problem + ' = ' + exprItem.result);
-				copyMessage.value.show();
-				setTimeout(() => copyMessage.value.hide(), 2000);
-			} catch (err) {
-				console.error('Failed to copy: ', err);
-				alert('Failed to copy');
-			}
-		}
+const copyMessage = ref();
 
-		return {
-			copyMessage, copyProblem,
-		}
-	},
-	name: 'expr-item',
+const copyProblem = async exprItem => {
+	try {
+		await navigator.clipboard.writeText(exprItem.problem + ' = ' + exprItem.result);
+		console.log('Content copied to clipboard: ' + exprItem.problem + ' = ' + exprItem.result);
+		copyMessage.value.show();
+		setTimeout(() => copyMessage.value.hide(), 2000);
+	} catch (err) {
+		console.error('Failed to copy: ', err);
+		alert('Failed to copy');
+	}
 }
 </script>
 

@@ -8,41 +8,31 @@
 	</q-drawer>
 </template>
 
-<script>
+<script setup>
 import { computed } from 'vue';
-
 import ExprList from '@/components/ExprList.vue';
 
-export default {
-	components: {
-		ExprList,
+const props = defineProps({
+	historyData: {
+		type: Array,
+		required: true,
 	},
-	props: {
-		historyData: {
-			type: Array,
-			required: true,
-		},
-		drawer: {
-			type: Boolean,
-			default: false,
-		}
-	},
-	setup(props, { emit }) {
-		const drawerOpen = computed({
-			get: () => props.drawer,
-			set: value => {
-				emit('update:drawer', value);
-			},
-		});
-		const toggleDrawer = () => {
-			drawerOpen.value = !drawerOpen.value;
-		}
+	drawer: {
+		type: Boolean,
+		default: false,
+	}
+});
 
-		return {
-			drawerOpen, toggleDrawer,
-		}
+const emit = defineEmits(['deleteItem', 'runItem', 'update:drawer']);
+
+const drawerOpen = computed({
+	get: () => props.drawer,
+	set: value => {
+		emit('update:drawer', value);
 	},
-	name: 'history-sidebar',
+});
+const toggleDrawer = () => {
+	drawerOpen.value = !drawerOpen.value;
 }
 </script>
 

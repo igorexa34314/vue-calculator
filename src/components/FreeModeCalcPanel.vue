@@ -8,20 +8,11 @@
 	</div>
 </template>
 
-<script>
+<script setup>
+const emit = defineEmits(['enterCharacter']);
+const actions = ['AC', '+/-', '%', '='];
 
-export default {
-	setup(props, { emit }) {
-		const actions = ['AC', '+/-', '%', '='];
-
-		const enterCharacter = character => emit('enterCharacter', character);
-
-		return {
-			actions, enterCharacter,
-		}
-	},
-	name: 'free-mode-calc-panel',
-}
+const enterCharacter = character => emit('enterCharacter', character);
 </script>
 
 <style lang="scss">

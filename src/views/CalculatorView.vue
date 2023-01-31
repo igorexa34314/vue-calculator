@@ -39,7 +39,7 @@
 	</div>
 </template>
 
-<script>
+<script setup>
 import BaseCalcPanel from '@/components/BaseCalcPanel.vue';
 import AdvCalcPanel from '@/components/AdvCalcPanel.vue';
 import FreeModeCalcPanel from '@/components/FreeModeCalcPanel.vue';
@@ -47,54 +47,38 @@ import CalculatorDisplay from '@/components/CalculatorDisplay.vue';
 import HistorySidebar from '@/components/HistorySidebar.vue';
 
 import { ref, computed, watch } from 'vue';
-
 import { useStore } from 'vuex';
 
 import { useExpression } from '@/hooks/useExpression';
 import { useDarkMode } from '@/hooks/useDarkMode';
 
-export default {
-	components: {
-		HistorySidebar, BaseCalcPanel, AdvCalcPanel, FreeModeCalcPanel, CalculatorDisplay
-	},
-	setup() {
-		const store = useStore();
+const store = useStore();
 
-		const getProblemItems = computed(() => store.getters.getProblemItems);
+const getProblemItems = computed(() => store.getters.getProblemItems);
 
-		const drawer = ref(false);
+const drawer = ref(false);
 
-		const { darkMode } = useDarkMode();
+const { darkMode } = useDarkMode();
 
-		const tabs = [
-			{ name: 'base', label: 'Base' },
-			{ name: 'advanced', label: 'Advanced' },
-			{ name: 'freeMode', label: 'Free Mode' },
-		];
+const tabs = [
+	{ name: 'base', label: 'Base' },
+	{ name: 'advanced', label: 'Advanced' },
+	{ name: 'freeMode', label: 'Free Mode' },
+];
 
-		const activeTab = ref('');
+const activeTab = ref('');
 
-		if (localStorage.getItem('activeTab')) {
-			activeTab.value = JSON.parse(localStorage.getItem('activeTab'));
-		}
-		else {
-			activeTab.value = tabs[0].name;
-		}
-
-		watch(activeTab, newValue => localStorage.setItem('activeTab', JSON.stringify(newValue)));
-
-		const { expr, enterCharacter, showExpr, deleteExpr } = useExpression();
-
-		return {
-			darkMode,
-			getProblemItems,
-			drawer,
-			tabs, activeTab,
-			expr, enterCharacter,
-			showExpr, deleteExpr,
-		}
-	},
+if (localStorage.getItem('activeTab')) {
+	activeTab.value = JSON.parse(localStorage.getItem('activeTab'));
 }
+else {
+	activeTab.value = tabs[0].name;
+}
+
+watch(activeTab, newValue => localStorage.setItem('activeTab', JSON.stringify(newValue)));
+
+const { expr, enterCharacter, showExpr, deleteExpr } = useExpression();
+
 </script>
 
 <style lang="scss">

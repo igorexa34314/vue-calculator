@@ -25,9 +25,7 @@
 </template>
 
 <script>
-export default {
-	name: 'decor-ellipse',
-}
+export default { name: 'decor-ellipse' }
 </script>
 
 <style lang="scss" scoped>
