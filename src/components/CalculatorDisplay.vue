@@ -16,6 +16,7 @@
 <script setup>
 import { computed } from 'vue';
 
+const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
 	modelValue: {
 		type: Object,
@@ -26,8 +27,6 @@ const props = defineProps({
 		default: false,
 	},
 });
-
-const emit = defineEmits(['update:modelValue']);
 
 const exprValue = computed({
 	get: () => props.modelValue,

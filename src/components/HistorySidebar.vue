@@ -9,9 +9,10 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
 import ExprList from '@/components/ExprList.vue';
+import { computed } from 'vue';
 
+const emit = defineEmits(['deleteItem', 'runItem', 'update:drawer']);
 const props = defineProps({
 	historyData: {
 		type: Array,
@@ -23,17 +24,12 @@ const props = defineProps({
 	}
 });
 
-const emit = defineEmits(['deleteItem', 'runItem', 'update:drawer']);
-
 const drawerOpen = computed({
 	get: () => props.drawer,
 	set: value => {
 		emit('update:drawer', value);
 	},
 });
-const toggleDrawer = () => {
-	drawerOpen.value = !drawerOpen.value;
-}
 </script>
 
 <style lang="scss">

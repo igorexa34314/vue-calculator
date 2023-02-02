@@ -1,6 +1,6 @@
 <template>
 	<q-btn round dense class="panel-btn" @click="$emit('btnClick', value)" color="btn" text-color="btn-color" no-caps>
-		<slot></slot>
+		<slot />
 	</q-btn>
 </template>
 

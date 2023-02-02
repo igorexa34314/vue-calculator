@@ -10,6 +10,7 @@
 
 <script setup>
 const emit = defineEmits(['enterCharacter']);
+
 const actions = ['AC', '+/-', '%', '='];
 
 const enterCharacter = character => emit('enterCharacter', character);
@@ -28,8 +29,6 @@ const enterCharacter = character => emit('enterCharacter', character);
 		}
 	}
 }
-// .numbers {}
-// .actions {}
 .operators {
 	@media(max-width: $breakpoint-sm) {
 		padding-left: 0 !important;

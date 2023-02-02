@@ -48,7 +48,6 @@ import HistorySidebar from '@/components/HistorySidebar.vue';
 
 import { ref, computed, watch } from 'vue';
 import { useStore } from 'vuex';
-
 import { useExpression } from '@/hooks/useExpression';
 import { useDarkMode } from '@/hooks/useDarkMode';
 
@@ -78,7 +77,6 @@ else {
 watch(activeTab, newValue => localStorage.setItem('activeTab', JSON.stringify(newValue)));
 
 const { expr, enterCharacter, showExpr, deleteExpr } = useExpression();
-
 </script>
 
 <style lang="scss">

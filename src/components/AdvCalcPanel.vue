@@ -15,9 +15,8 @@
 				:icon="op.icon || undefined">{{ op.icon ? '' : op.name }}</calc-btn>
 		</div>
 		<div class="specs col-12 self-stretch row no-wrap justify-between q-gutter-x-lg">
-			<calc-btn v-for="spec in numbers.slice(9)" :key="spec" :value="spec" @btnClick="enterCharacter">{{
-				spec
-			}}</calc-btn>
+			<calc-btn v-for="spec in numbers.slice(9)" :key="spec" :value="spec" @btnClick="enterCharacter">
+				{{ spec }}</calc-btn>
 		</div>
 		<div class="trigonometry col-12 self-stretch row no-wrap justify-between q-gutter-x-lg">
 			<calc-btn v-for="trg in trigonometry" :key="trg" :value="trg" @btnClick="enterCharacter">{{ trg }}</calc-btn>
@@ -54,10 +53,6 @@ const enterCharacter = character => emit('enterCharacter', character);
 		}
 	}
 }
-// .numbers {}
-// .actions {}
-// .specs {}
-// .trigonometry {}
 .operators {
 	@media(max-width: $breakpoint-sm) {
 		padding-left: 0 !important;

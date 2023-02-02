@@ -29,7 +29,6 @@ export default { name: 'decor-ellipse' }
 </script>
 
 <style lang="scss" scoped>
-// .body--dark {}
 .decor-elipse {
 	pointer-events: none;
 	user-select: none;

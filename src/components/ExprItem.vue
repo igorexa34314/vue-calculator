@@ -28,7 +28,6 @@ const props = defineProps({
 });
 
 const copyMessage = ref();
-
 const copyProblem = async exprItem => {
 	try {
 		await navigator.clipboard.writeText(exprItem.problem + ' = ' + exprItem.result);

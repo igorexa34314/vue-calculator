@@ -18,7 +18,5 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-// .expr {
-// 	&-list {}
-// }
+
 </style>

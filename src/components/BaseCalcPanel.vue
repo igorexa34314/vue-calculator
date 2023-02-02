@@ -41,8 +41,6 @@ const enterCharacter = character => emit('enterCharacter', character);
 		}
 	}
 }
-// .numbers {}
-// .actions {}
 .operators {
 	@media(max-width: $breakpoint-sm) {
 		padding-left: 0 !important;
