@@ -1,7 +1,4 @@
-// It's highly recommended to change the default colors
-// to match your app's branding.
-
-@import '~quasar-variables-styl';
+@import 'quasar/src/css/index.sass';
 
 $typography-font-family: 'Poppins', sans-serif;
 
@@ -25,8 +22,8 @@ $btn: rgba(255, 255, 255, 0.3);
 $btn-dark: rgba(5, 5, 5, 0.3);
 $warning: #f2c037;
 
-$body-font-size: 26px;
-$body-font-weight: 600;
+$body-font-size: 26px !important;
+$body-font-weight: 600 !important;
 
 $input-font-size: 22px;
 $input-line-height: 1.3;

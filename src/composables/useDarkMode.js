@@ -1,10 +1,8 @@
-import { ref, watch } from 'vue';
-
+import { ref, watchEffect } from 'vue';
 import { useQuasar } from 'quasar';
 
 export function useDarkMode() {
 	const $q = ref(useQuasar());
-
 	const darkMode = ref(false);
 
 	if (localStorage.getItem('darkMode')) {
@@ -13,12 +11,12 @@ export function useDarkMode() {
 		darkMode.value = false;
 	}
 
-	const toggleDarkMode = newValue => {
-		$q.value.dark.set(newValue);
-		localStorage.setItem('darkMode', JSON.stringify(newValue));
+	const toggleDarkMode = () => {
+		$q.value.dark.set(darkMode.value);
+		localStorage.setItem('darkMode', JSON.stringify(darkMode.value));
 	};
-	watch(darkMode, toggleDarkMode);
-	toggleDarkMode(darkMode.value);
+	watchEffect(toggleDarkMode);
+	toggleDarkMode();
 
 	return {
 		darkMode

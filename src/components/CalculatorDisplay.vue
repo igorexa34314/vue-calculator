@@ -2,8 +2,7 @@
 	<div class="display column no-wrap">
 		<div class="display__input row">
 			<q-input ref="problemInput" v-model.trim="exprValue.problem" class="col-grow" input-class="problem" borderless
-				:dense="freeMode ? false : true" autocomplete="off" :autofocus="freeMode ? true : false"
-				:readonly="freeMode ? false : true" :autogrow="freeMode ? true : false"
+				:dense="!freeMode" autocomplete="off" :autofocus="freeMode" :readonly="!freeMode" :autogrow="freeMode"
 				:placeholder="freeMode ? 'Type your full expression' : ''" />
 		</div>
 		<div class="display__input row no-wrap items-center" :class="freeMode ? 'q-mt-md' : ''">

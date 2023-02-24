@@ -2,17 +2,16 @@
 	<q-drawer v-model="drawerOpen" class="bg-sidebar" side="right" :width="450" :breakpoint="1024" overlay elevated
 		persistent>
 		<q-scroll-area class="fit">
-			<ExprList :exprItems="historyData" @deleteItem="exprItem => { $emit('deleteItem', exprItem) }"
-				@runItem="exprItem => { $emit('runItem', exprItem) }" />
+			<ExprList :exprItems="historyData" @deleteItem="exprItem => $emit('deleteItem', exprItem)" @runItem="runItem" />
 		</q-scroll-area>
 	</q-drawer>
 </template>
 
 <script setup>
-import ExprList from '@/components/ExprList.vue';
+import ExprList from '@/components/history/ExprList.vue';
 import { computed } from 'vue';
 
-const emit = defineEmits(['deleteItem', 'runItem', 'update:drawer']);
+const emit = defineEmits(['update:drawer', 'runItem']);
 const props = defineProps({
 	historyData: {
 		type: Array,
@@ -30,6 +29,10 @@ const drawerOpen = computed({
 		emit('update:drawer', value);
 	},
 });
+const runItem = (exprItem) => {
+	emit('runItem', exprItem);
+	emit('update:drawer', false);
+};
 </script>
 
 <style lang="scss">

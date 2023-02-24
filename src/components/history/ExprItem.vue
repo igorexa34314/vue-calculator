@@ -11,8 +11,7 @@
 				class="text-caption">Copied to clipboard</q-tooltip>
 		</q-item-section>
 		<q-item-section side>
-			<q-btn flat rounded text-color="icons" padding="sm" dense icon="delete"
-				@click="$emit('deleteItem', exprItem)" />
+			<q-btn flat rounded text-color="icons" padding="sm" dense icon="delete" @click="$emit('deleteItem', exprItem)" />
 		</q-item-section>
 	</q-item>
 </template>
@@ -31,11 +30,9 @@ const copyMessage = ref();
 const copyProblem = async exprItem => {
 	try {
 		await navigator.clipboard.writeText(exprItem.problem + ' = ' + exprItem.result);
-		console.log('Content copied to clipboard: ' + exprItem.problem + ' = ' + exprItem.result);
 		copyMessage.value.show();
 		setTimeout(() => copyMessage.value.hide(), 2000);
 	} catch (err) {
-		console.error('Failed to copy: ', err);
 		alert('Failed to copy');
 	}
 }

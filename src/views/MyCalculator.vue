@@ -1,6 +1,5 @@
 <template>
-	<HistorySidebar :historyData="getProblemItems" v-model:drawer="drawer" @deleteItem="deleteExpr"
-		@runItem="showExpr" />
+	<HistorySidebar :historyData="getProblemItems" v-model:drawer="drawer" @deleteItem="deleteExpr" @runItem="showExpr" />
 	<div class="calculator">
 		<div class="calculator__container container">
 			<div class="calculator__header row wrap items-center justify-center q-gutter-y-md">
@@ -8,16 +7,16 @@
 					<q-toggle v-model="darkMode" size="110px" keep-color checked-icon="o_dark_mode" color="blue"
 						unchecked-icon="o_light_mode" />
 				</div>
-				<div class="history__btn col-grow row inline justify-end"><q-btn dense size="30px" rounded flat
-						@click="drawer = !drawer" text-color="icons" icon="update"></q-btn>
+				<div class="history__btn col-grow row inline justify-end"><q-btn dense size="lg" flat @click="drawer = !drawer"
+						text-color="icons" icon="update" rounded></q-btn>
 				</div>
 				<q-tabs dense v-model="activeTab" class="bg-none text-accent shadow-none" content-class="calculator-tabs"
 					shrink>
 					<q-tab v-for="tab in tabs" :key="tab.name" v-bind="tab" class="" content-class="calculator-tab" />
 				</q-tabs>
 			</div>
-			<CalculatorDisplay class="calculator__display" :class="activeTab === 'freeMode' ? 'q-mb-lg' : ''"
-				v-model="expr" :free-mode="activeTab === 'freeMode' ? true : false" />
+			<CalculatorDisplay class="calculator__display" :class="activeTab === 'freeMode' ? 'q-mb-lg' : ''" v-model="expr"
+				:free-mode="activeTab === 'freeMode' ? true : false" />
 			<div class="calculator__body">
 				<q-tab-panels v-model="activeTab" class="q-pa-none bg-transparent" animated swipeable>
 					<q-tab-panel :name="tabs[0].name" class="q-pa-none">
@@ -40,20 +39,20 @@
 </template>
 
 <script setup>
-import BaseCalcPanel from '@/components/BaseCalcPanel.vue';
-import AdvCalcPanel from '@/components/AdvCalcPanel.vue';
-import FreeModeCalcPanel from '@/components/FreeModeCalcPanel.vue';
+import BaseCalcPanel from '@/components/panels/BaseCalcPanel.vue';
+import AdvCalcPanel from '@/components/panels/AdvCalcPanel.vue';
+import FreeModeCalcPanel from '@/components/panels/FreeModeCalcPanel.vue';
 import CalculatorDisplay from '@/components/CalculatorDisplay.vue';
-import HistorySidebar from '@/components/HistorySidebar.vue';
+import HistorySidebar from '@/components/history/HistorySidebar.vue';
 
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watchEffect } from 'vue';
 import { useStore } from 'vuex';
-import { useExpression } from '@/hooks/useExpression';
-import { useDarkMode } from '@/hooks/useDarkMode';
+import { useExpression } from '@/composables/useExpression';
+import { useDarkMode } from '@/composables/useDarkMode';
 
 const store = useStore();
 
-const getProblemItems = computed(() => store.getters.getProblemItems);
+const getProblemItems = computed(() => store.state.problemItems);
 
 const drawer = ref(false);
 
@@ -74,7 +73,7 @@ else {
 	activeTab.value = tabs[0].name;
 }
 
-watch(activeTab, newValue => localStorage.setItem('activeTab', JSON.stringify(newValue)));
+watchEffect(() => localStorage.setItem('activeTab', JSON.stringify(activeTab.value)));
 
 const { expr, enterCharacter, showExpr, deleteExpr } = useExpression();
 </script>

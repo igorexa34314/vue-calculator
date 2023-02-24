@@ -1,16 +1,12 @@
 import { reactive } from 'vue';
-
 import { evaluate, round } from 'mathjs';
-
 import { useStore } from 'vuex';
 
 export function useExpression() {
 	const store = useStore();
 
 	const operators = ['*', '/', '-', '+', '='];
-
 	const hasOperatorsInTheEnd = () => operators.some(el => expr.problem.endsWith(el));
-
 	const expr = reactive({
 		result: 0,
 		problem: ''
@@ -31,7 +27,6 @@ export function useExpression() {
 			expr.result = 'Error';
 		}
 	};
-
 	const enterCharacter = ch => {
 		switch (ch) {
 			case 'AC':
@@ -70,11 +65,6 @@ export function useExpression() {
 				} else {
 					expr.problem = ch + `(${expr.problem})`;
 				}
-				// if(expr.result) {
-				// 	expr.problem = expr.problem.replace(
-				// 		new RegExp(expr.problem.split(/\s*[-+\/*]\s*/g).pop() + '$'),
-				// 		ch + `(${expr.problem.split(/\s*[-+\/*]\s*/g).pop()})`);
-				// }
 				break;
 			case '×':
 				if (expr.problem && !hasOperatorsInTheEnd()) {
@@ -104,23 +94,20 @@ export function useExpression() {
 				break;
 		}
 	};
-
 	const showExpr = ex => {
 		expr.problem = ex.problem;
 		expr.result = ex.result;
 	};
-
 	const deleteExpr = exprItem => {
-		store.dispatch('deleteProblemItem', exprItem);
+		store.commit('deleteProblemItem', exprItem);
 	};
-
 	const saveToHistory = (pr, res) => {
 		if (pr && !isNaN(res) && res !== Infinity && res !== NaN) {
 			const problemItem = {
 				problem: pr,
 				result: res
 			};
-			store.dispatch('addProblemItem', problemItem);
+			store.commit('addProblemItem', problemItem);
 		}
 	};
 

@@ -1,29 +1,24 @@
 {
 	"name": "vue-calculator",
 	"description": "Simple calculator on Vue 3 (Quasar UI)",
-	"version": "0.1.0",
-	"private": true,
+	"version": "1.0.0",
+	"type": "module",
 	"scripts": {
-		"dev": "vue-cli-service serve",
-		"build": "vue-cli-service build",
-		"deploy": "sh deploy.sh"
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@quasar/extras": "^1.0.0",
-		"core-js": "^3.8.3",
-		"mathjs": "^11.5.0",
-		"quasar": "^2.0.0",
-		"vue": "^3.2.13",
-		"vue-router": "^4.0.3",
-		"vuex": "^4.0.0"
+		"@quasar/extras": "^1.15.11",
+		"mathjs": "^11.5.1",
+		"quasar": "^2.11.6",
+		"vue": "^3.2.45",
+		"vuex": "^4.1.0"
 	},
 	"devDependencies": {
-		"@vue/cli-plugin-babel": "~5.0.0",
-		"@vue/cli-plugin-router": "~5.0.0",
-		"@vue/cli-plugin-vuex": "~5.0.0",
-		"@vue/cli-service": "~5.0.0",
+		"@quasar/vite-plugin": "^1.3.0",
+		"@vitejs/plugin-vue": "^4.0.0",
 		"sass": "1.32.12",
-		"sass-loader": "^12.0.0",
-		"vue-cli-plugin-quasar": "~5.0.1"
+		"vite": "^4.1.0"
 	}
 }

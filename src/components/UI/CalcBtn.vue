@@ -18,12 +18,13 @@ export default { name: 'calc-btn' }
 </script>
 
 <style scoped lang="scss">
+@import "@/assets/styles/variables";
 .panel-btn {
-	width: 2.6em;
-	height: 2.6em;
+	width: 2.5em;
+	height: 2.5em;
 	@media(max-width: 450px) {
-		width: 2.4em;
-		height: 2.4em;
+		width: 2.35em;
+		height: 2.35em;
 		font-size: 0.9em;
 	}
 	@media(max-width: 360px) {

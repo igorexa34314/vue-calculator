@@ -3,7 +3,7 @@
 		<div class="col-9 column q-pr-md q-pl-xs justify-between q-col-gutter-y-lg">
 			<div class="actions col-grow row no-wrap q-gutter-x-md justify-between">
 				<calc-btn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions"
-					:icon="action === 'bs' ? 'o_backspace' : undefined">{{ action !== 'bs' ? action : ''}}</calc-btn>
+					:icon="action === 'bs' ? 'o_backspace' : undefined">{{ action !== 'bs' ? action : '' }}</calc-btn>
 			</div>
 			<div class="numbers col-grow row wrap items-start justify-between q-gutter-x-md q-gutter-y-lg">
 				<calc-btn v-for="num in numbers.slice(0, 9)" :key="num" :value="num"
@@ -31,13 +31,13 @@ const actions = ['AC', 'bs', 'e'];
 const operators = [
 	{ name: 'sqrt', icon: 'fa-solid fa-square-root-variable' },
 	{ name: '^', icon: 'fa-solid fa-angle-up' },
-	{ name: 'log', icon: '' },
-	{ name: 'exp', icon: '' },
+	{ name: 'log' },
+	{ name: 'exp' },
 ];
 const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '(', ')'];
 const trigonometry = ['sin', 'cos', 'tan', '='];
 
-const enterCharacter = character => emit('enterCharacter', character);
+const enterCharacter = ch => emit('enterCharacter', ch);
 </script>
 
 <style lang="scss">
@@ -64,5 +64,10 @@ const enterCharacter = character => emit('enterCharacter', character);
 }
 .bg-operators {
 	background-color: $blue-grey-2 !important;
+}
+.operators button, .actions button {
+	.q-icon {
+		font-size: 1em !important;
+	}
 }
 </style>

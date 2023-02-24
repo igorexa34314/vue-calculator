@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import ExprItem from '@/components/ExprItem.vue';
+import ExprItem from '@/components/history/ExprItem.vue';
 
 const props = defineProps({
 	exprItems: {
@@ -17,6 +17,4 @@ const props = defineProps({
 });
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

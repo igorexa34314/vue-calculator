@@ -1,9 +1,9 @@
 <template>
 	<div class="panel row wrap justify-between items-stretch q-pb-sm">
-		<div class="col-9 column q-pr-md q-pl-xs justify-between q-col-gutter-y-lg">
+		<div class="col-9 column q-px-sm justify-between q-col-gutter-y-lg">
 			<div class="actions col-grow row no-wrap q-gutter-x-md justify-between">
-				<calc-btn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter"
-					color="actions">{{ action }}</calc-btn>
+				<calc-btn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions">{{
+					action }}</calc-btn>
 			</div>
 			<div class="numbers col-grow row wrap items-start justify-between q-gutter-x-md q-gutter-y-lg">
 				<calc-btn v-for="num in numbers" :key="num" :value="num"
