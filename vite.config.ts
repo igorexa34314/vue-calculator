@@ -6,7 +6,7 @@ import { quasar, transformAssetUrls } from '@quasar/vite-plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	base: '/vue-calculator/',
+	// base: '/vue-calculator/',
 	server: {
 		port: 3000
 	},
@@ -23,5 +23,8 @@ export default defineConfig({
 			autoImportComponentCase: 'kebab',
 			sassVariables: 'src/assets/styles/variables.scss'
 		})
-	]
+	],
+	define: {
+		'process.env.DEBUG': false
+	}
 });

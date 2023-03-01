@@ -6,7 +6,7 @@
   </q-layout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import MyCalculator from '@/views/MyCalculator.vue';
 </script>
 

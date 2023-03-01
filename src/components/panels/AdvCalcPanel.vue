@@ -7,7 +7,7 @@
 			</div>
 			<div class="numbers col-grow row wrap items-start justify-between q-gutter-x-md q-gutter-y-lg">
 				<calc-btn v-for="num in numbers.slice(0, 9)" :key="num" :value="num"
-					v-on="!isNaN(num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}</calc-btn>
+					v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}</calc-btn>
 			</div>
 		</div>
 		<div class="operators col-3 column q-px-sm q-gutter-y-lg items-center">
@@ -24,8 +24,11 @@
 	</div>
 </template>
 
-<script setup>
-const emit = defineEmits(['enterCharacter']);
+<script setup lang="ts">
+
+const emit = defineEmits<{
+	(e: 'enterCharacter', character: string): void
+}>();
 
 const actions = ['AC', 'bs', 'e'];
 const operators = [
@@ -34,10 +37,10 @@ const operators = [
 	{ name: 'log' },
 	{ name: 'exp' },
 ];
-const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '(', ')'];
+const numbers: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '(', ')'];
 const trigonometry = ['sin', 'cos', 'tan', '='];
 
-const enterCharacter = ch => emit('enterCharacter', ch);
+const enterCharacter = (ch: string) => emit('enterCharacter', ch);
 </script>
 
 <style lang="scss">

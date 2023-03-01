@@ -7,7 +7,7 @@
 			</div>
 			<div class="numbers col-grow row wrap items-start justify-between q-gutter-x-md q-gutter-y-lg">
 				<calc-btn v-for="num in numbers" :key="num" :value="num"
-					v-on="!isNaN(num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}</calc-btn>
+					v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}</calc-btn>
 			</div>
 		</div>
 		<div class="operators col-3 column justify-between q-px-sm q-gutter-y-md items-center">
@@ -18,14 +18,16 @@
 	</div>
 </template>
 
-<script setup>
-const emit = defineEmits(['enterCharacter']);
+<script setup lang="ts">
+const emit = defineEmits<{
+	(e: 'enterCharacter', character: string): void
+}>();
 
 const actions = ['AC', '+/-', '%'];
 const operators = ['×', '÷', '-', '+', '='];
 const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '00'];
 
-const enterCharacter = character => emit('enterCharacter', character);
+const enterCharacter = (ch: string) => emit('enterCharacter', ch);
 </script>
 
 <style lang="scss">

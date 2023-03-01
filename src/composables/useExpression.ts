@@ -1,18 +1,19 @@
 import { reactive } from 'vue';
 import { evaluate, round } from 'mathjs';
-import { useStore } from 'vuex';
+import { useHistoryStore } from '@/stores/history';
+import type { Expression } from '@/types/Expression';
 
 export function useExpression() {
-	const store = useStore();
+	const { addProblemItem, deleteProblemItem } = useHistoryStore();
 
 	const operators = ['*', '/', '-', '+', '='];
 	const hasOperatorsInTheEnd = () => operators.some(el => expr.problem.endsWith(el));
-	const expr = reactive({
-		result: 0,
-		problem: ''
+	const expr: Expression = reactive({
+		problem: '',
+		result: 0
 	});
 
-	const solveProblem = () => {
+	const solveProblem = (): void | Boolean => {
 		if (hasOperatorsInTheEnd()) {
 			expr.problem = expr.problem.slice(0, -1);
 		}
@@ -27,7 +28,7 @@ export function useExpression() {
 			expr.result = 'Error';
 		}
 	};
-	const enterCharacter = ch => {
+	const enterCharacter = (ch: string) => {
 		switch (ch) {
 			case 'AC':
 				expr.problem = '';
@@ -40,17 +41,17 @@ export function useExpression() {
 				break;
 			case '+/-':
 				if (solveProblem()) {
-					expr.result = expr.problem * -1;
+					expr.result = +expr.problem * -1;
 				} else if (expr.result) {
-					expr.result *= -1;
+					expr.result = +expr.result * -1;
 				}
 				saveToHistory(`-(${expr.problem})`, expr.result);
 				break;
 			case '%':
 				if (solveProblem()) {
-					expr.result = expr.problem / 100;
+					expr.result = +expr.problem / 100;
 				} else if (expr.result) {
-					expr.result /= 100;
+					expr.result = +expr.result / 100;
 				}
 				saveToHistory(expr.problem + '%', expr.result);
 				break;
@@ -83,7 +84,7 @@ export function useExpression() {
 				if (
 					!expr.problem
 						.split(/\s*[-+\/*]\s*/g)
-						.pop()
+						.slice(-1)
 						.includes('.')
 				) {
 					expr.problem += ch.toString();
@@ -94,20 +95,20 @@ export function useExpression() {
 				break;
 		}
 	};
-	const showExpr = ex => {
+	const showExpr = (ex: Expression) => {
 		expr.problem = ex.problem;
 		expr.result = ex.result;
 	};
-	const deleteExpr = exprItem => {
-		store.commit('deleteProblemItem', exprItem);
+	const deleteExpr = (exprItem: Expression) => {
+		deleteProblemItem(exprItem);
 	};
-	const saveToHistory = (pr, res) => {
-		if (pr && !isNaN(res) && res !== Infinity && res !== NaN) {
+	const saveToHistory = (pr: Expression['problem'], res: Expression['result']) => {
+		if (pr && !isNaN(+res) && res !== Infinity) {
 			const problemItem = {
 				problem: pr,
 				result: res
 			};
-			store.commit('addProblemItem', problemItem);
+			addProblemItem(problemItem);
 		}
 	};
 

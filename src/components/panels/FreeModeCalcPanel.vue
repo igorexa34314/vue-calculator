@@ -8,12 +8,14 @@
 	</div>
 </template>
 
-<script setup>
-const emit = defineEmits(['enterCharacter']);
+<script setup lang="ts">
+const emit = defineEmits<{
+	(e: 'enterCharacter', character: string): void
+}>();
 
 const actions = ['AC', '+/-', '%', '='];
 
-const enterCharacter = character => emit('enterCharacter', character);
+const enterCharacter = (ch: string) => emit('enterCharacter', ch);
 </script>
 
 <style lang="scss">

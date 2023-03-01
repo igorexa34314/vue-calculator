@@ -12,13 +12,18 @@
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
+import type { Expression } from '@/types/Expression';
+import type { PropType } from 'vue';
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits<{
+	(e: 'update:modelValue', value: Expression): void
+}>();
+
 const props = defineProps({
 	modelValue: {
-		type: Object,
+		type: Object as PropType<Expression>,
 		default: () => ({}),
 	},
 	freeMode: {

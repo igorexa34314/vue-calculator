@@ -6,12 +6,14 @@
 	<div class="q-pa-xl" v-else>You have no history</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import ExprItem from '@/components/history/ExprItem.vue';
+import type { Expression } from '@/types/Expression';
+import type { PropType } from 'vue';
 
 const props = defineProps({
 	exprItems: {
-		type: Array,
+		type: Array as PropType<Expression[]>,
 		required: true,
 	},
 });

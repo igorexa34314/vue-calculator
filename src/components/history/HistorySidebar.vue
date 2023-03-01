@@ -7,14 +7,19 @@
 	</q-drawer>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import ExprList from '@/components/history/ExprList.vue';
+import type { Expression } from '@/types/Expression';
 import { computed } from 'vue';
+import type { PropType } from 'vue';
 
-const emit = defineEmits(['update:drawer', 'runItem']);
+const emit = defineEmits<{
+	(e: 'update:drawer', value: boolean): void,
+	(e: 'runItem', item: Expression): void
+}>();
 const props = defineProps({
 	historyData: {
-		type: Array,
+		type: Array as PropType<Expression[]>,
 		required: true,
 	},
 	drawer: {
@@ -29,7 +34,7 @@ const drawerOpen = computed({
 		emit('update:drawer', value);
 	},
 });
-const runItem = (exprItem) => {
+const runItem = (exprItem: Expression) => {
 	emit('runItem', exprItem);
 	emit('update:drawer', false);
 };

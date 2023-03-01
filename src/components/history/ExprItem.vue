@@ -16,18 +16,20 @@
 	</q-item>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
+import type { PropType } from 'vue'
+import type { Expression } from '@/types/Expression';
 
 const props = defineProps({
 	exprItem: {
-		type: Object,
+		type: Object as PropType<Expression>,
 		required: true,
 	},
 });
 
 const copyMessage = ref();
-const copyProblem = async exprItem => {
+const copyProblem = async (exprItem: Expression) => {
 	try {
 		await navigator.clipboard.writeText(exprItem.problem + ' = ' + exprItem.result);
 		copyMessage.value.show();

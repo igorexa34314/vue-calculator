@@ -4,17 +4,14 @@
 	</q-btn>
 </template>
 
-<script setup>
+<script setup lang="ts">
+
 const props = defineProps({
 	value: {
 		type: [String, Number],
 		required: true,
 	}
 });
-</script>
-
-<script>
-export default { name: 'calc-btn' }
 </script>
 
 <style scoped lang="scss">

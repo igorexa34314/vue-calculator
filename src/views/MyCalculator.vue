@@ -38,7 +38,7 @@
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import BaseCalcPanel from '@/components/panels/BaseCalcPanel.vue';
 import AdvCalcPanel from '@/components/panels/AdvCalcPanel.vue';
 import FreeModeCalcPanel from '@/components/panels/FreeModeCalcPanel.vue';
@@ -46,13 +46,13 @@ import CalculatorDisplay from '@/components/CalculatorDisplay.vue';
 import HistorySidebar from '@/components/history/HistorySidebar.vue';
 
 import { ref, computed, watchEffect } from 'vue';
-import { useStore } from 'vuex';
+import { useHistoryStore } from '@/stores/history';
 import { useExpression } from '@/composables/useExpression';
 import { useDarkMode } from '@/composables/useDarkMode';
 
-const store = useStore();
+const historyStore = useHistoryStore();
 
-const getProblemItems = computed(() => store.state.problemItems);
+const getProblemItems = computed(() => historyStore.problemItems);
 
 const drawer = ref(false);
 
@@ -64,10 +64,10 @@ const tabs = [
 	{ name: 'freeMode', label: 'Free Mode' },
 ];
 
-const activeTab = ref('');
+const activeTab = ref<string>();
 
 if (localStorage.getItem('activeTab')) {
-	activeTab.value = JSON.parse(localStorage.getItem('activeTab'));
+	activeTab.value = JSON.parse(localStorage.getItem('activeTab') || '');
 }
 else {
 	activeTab.value = tabs[0].name;
