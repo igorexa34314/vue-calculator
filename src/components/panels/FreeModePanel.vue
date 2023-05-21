@@ -1,14 +1,16 @@
 <template>
 	<div class="panel row wrap justify-between items-stretch q-pb-sm">
 		<div class="actions col-grow row no-wrap q-gutter-x-md justify-between">
-			<calc-btn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions">{{
+			<CalcBtn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions">{{
 				action
-			}}</calc-btn>
+			}}</CalcBtn>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
+import CalcBtn from '@/components/UI/CalcBtn.vue';
+
 const emit = defineEmits<{
 	(e: 'enterCharacter', character: string): void
 }>();

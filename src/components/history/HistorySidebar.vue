@@ -2,37 +2,32 @@
 	<q-drawer v-model="drawerOpen" class="bg-sidebar" side="right" :width="450" :breakpoint="1024" overlay elevated
 		persistent>
 		<q-scroll-area class="fit">
-			<ExprList :exprItems="historyData" @deleteItem="exprItem => $emit('deleteItem', exprItem)" @runItem="runItem" />
+			<ExpressionList :items="historyData" @deleteItem="exprItem => $emit('deleteItem', exprItem)" @runItem="runItem" />
 		</q-scroll-area>
 	</q-drawer>
 </template>
 
 <script setup lang="ts">
-import ExprList from '@/components/history/ExprList.vue';
-import type { Expression } from '@/types/Expression';
+import ExpressionList from '@/components/history/ExpressionList.vue';
 import { computed } from 'vue';
-import type { PropType } from 'vue';
+import { Expression } from '@/types/Expression';
 
 const emit = defineEmits<{
-	(e: 'update:drawer', value: boolean): void,
-	(e: 'runItem', item: Expression): void
+	(e: 'update:drawer', value: boolean): void;
+	(e: 'runItem', exp: Expression): void;
+	(e: 'deleteItem', exp: Expression): void;
 }>();
-const props = defineProps({
-	historyData: {
-		type: Array as PropType<Expression[]>,
-		required: true,
-	},
-	drawer: {
-		type: Boolean,
-		default: false,
-	}
+
+const props = withDefaults( defineProps<{
+	historyData: Expression[],
+	drawer?: boolean,
+}>(), {
+	drawer: false,
 });
 
 const drawerOpen = computed({
 	get: () => props.drawer,
-	set: value => {
-		emit('update:drawer', value);
-	},
+	set: value => emit('update:drawer', value),
 });
 const runItem = (exprItem: Expression) => {
 	emit('runItem', exprItem);

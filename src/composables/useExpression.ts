@@ -1,7 +1,7 @@
 import { reactive } from 'vue';
 import { evaluate, round } from 'mathjs';
 import { useHistoryStore } from '@/stores/history';
-import type { Expression } from '@/types/Expression';
+import { Expression } from '@/types/Expression';
 
 export function useExpression() {
 	const { addProblemItem, deleteProblemItem } = useHistoryStore();

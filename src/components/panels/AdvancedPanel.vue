@@ -2,29 +2,32 @@
 	<div class="panel row wrap justify-between items-center q-col-gutter-y-lg q-pb-sm">
 		<div class="col-9 column q-pr-md q-pl-xs justify-between q-col-gutter-y-lg">
 			<div class="actions col-grow row no-wrap q-gutter-x-md justify-between">
-				<calc-btn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions"
-					:icon="action === 'bs' ? 'o_backspace' : undefined">{{ action !== 'bs' ? action : '' }}</calc-btn>
+				<CalcBtn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions"
+					:icon="action === 'bs' ? outlinedBackspace : undefined">{{ action !== 'bs' ? action : '' }}</CalcBtn>
 			</div>
 			<div class="numbers col-grow row wrap items-start justify-between q-gutter-x-md q-gutter-y-lg">
-				<calc-btn v-for="num in numbers.slice(0, 9)" :key="num" :value="num"
-					v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}</calc-btn>
+				<CalcBtn v-for="num in numbers.slice(0, 9)" :key="num" :value="num"
+					v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}</CalcBtn>
 			</div>
 		</div>
 		<div class="operators col-3 column q-px-sm q-gutter-y-lg items-center">
-			<calc-btn v-for="op in operators" :key="op.name" :value="op.name" @btnClick="enterCharacter" color="operators"
-				:icon="op.icon || undefined">{{ op.icon ? '' : op.name }}</calc-btn>
+			<CalcBtn v-for="op in operators" :key="op.name" :value="op.name" @btnClick="enterCharacter" color="operators"
+				:icon="op.icon || undefined">{{ op.icon ? '' : op.name }}</CalcBtn>
 		</div>
 		<div class="specs col-12 self-stretch row no-wrap justify-between q-gutter-x-lg">
-			<calc-btn v-for="spec in numbers.slice(9)" :key="spec" :value="spec" @btnClick="enterCharacter">
-				{{ spec }}</calc-btn>
+			<CalcBtn v-for="spec in numbers.slice(9)" :key="spec" :value="spec" @btnClick="enterCharacter">
+				{{ spec }}</CalcBtn>
 		</div>
 		<div class="trigonometry col-12 self-stretch row no-wrap justify-between q-gutter-x-lg">
-			<calc-btn v-for="trg in trigonometry" :key="trg" :value="trg" @btnClick="enterCharacter">{{ trg }}</calc-btn>
+			<CalcBtn v-for="trg in trigonometry" :key="trg" :value="trg" @btnClick="enterCharacter">{{ trg }}</CalcBtn>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
+import CalcBtn from '@/components/UI/CalcBtn.vue';
+import { fasSquareRootVariable, fasAngleUp, } from '@quasar/extras/fontawesome-v6';
+import { outlinedBackspace } from '@quasar/extras/material-icons-outlined';
 
 const emit = defineEmits<{
 	(e: 'enterCharacter', character: string): void
@@ -32,8 +35,8 @@ const emit = defineEmits<{
 
 const actions = ['AC', 'bs', 'e'];
 const operators = [
-	{ name: 'sqrt', icon: 'fa-solid fa-square-root-variable' },
-	{ name: '^', icon: 'fa-solid fa-angle-up' },
+	{ name: 'sqrt', icon: fasSquareRootVariable },
+	{ name: '^', icon: fasAngleUp },
 	{ name: 'log' },
 	{ name: 'exp' },
 ];

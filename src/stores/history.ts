@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { Expression } from '@/types/Expression';
+import { Expression } from '@/types/Expression';
 
 export const useHistoryStore = defineStore('history', () => {
 	const problemItems = ref<Expression[]>(JSON.parse(localStorage.getItem('history') || '[]'));

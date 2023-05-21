@@ -4,11 +4,11 @@
 		<div class="calculator__container container">
 			<div class="calculator__header row wrap items-center justify-center q-gutter-y-md">
 				<div class="theme__toggle col-8 row inline justify-end">
-					<q-toggle v-model="darkMode" size="110px" keep-color checked-icon="o_dark_mode" color="blue"
-						unchecked-icon="o_light_mode" />
+					<q-toggle v-model="darkMode" size="110px" keep-color :checked-icon="outlinedDarkMode" color="blue"
+						:unchecked-icon="outlinedLightMode" />
 				</div>
 				<div class="history__btn col-grow row inline justify-end"><q-btn dense size="lg" flat @click="drawer = !drawer"
-						text-color="icons" icon="update" rounded></q-btn>
+						text-color="icons" :icon="matUpdate" rounded></q-btn>
 				</div>
 				<q-tabs dense v-model="activeTab" class="bg-none text-accent shadow-none" content-class="calculator-tabs"
 					shrink>
@@ -20,31 +20,33 @@
 			<div class="calculator__body">
 				<q-tab-panels v-model="activeTab" class="q-pa-none bg-transparent" animated swipeable>
 					<q-tab-panel :name="tabs[0].name" class="q-pa-none">
-						<BaseCalcPanel class="calculator__panel" @enterCharacter="enterCharacter" />
+						<BasePanel class="calculator__panel" @enterCharacter="enterCharacter" />
 					</q-tab-panel>
 					<q-tab-panel :name="tabs[1].name" class="q-pa-none">
-						<AdvCalcPanel class="calculator__panel" @enterCharacter="enterCharacter" />
+						<AdvancedPanel class="calculator__panel" @enterCharacter="enterCharacter" />
 					</q-tab-panel>
 					<q-tab-panel :name="tabs[2].name" class="q-pa-none">
-						<FreeModeCalcPanel class="calculator__panel" @enterCharacter="enterCharacter" />
+						<FreeModePanel class="calculator__panel" @enterCharacter="enterCharacter" />
 					</q-tab-panel>
 				</q-tab-panels>
 				<div class="calculator__footer">
 					<div class="calculator__decor"><span></span></div>
 				</div>
-				<decor-ellipse class="panel-decor" />
+				<DecorEllipse class="panel-decor" />
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import BaseCalcPanel from '@/components/panels/BaseCalcPanel.vue';
-import AdvCalcPanel from '@/components/panels/AdvCalcPanel.vue';
-import FreeModeCalcPanel from '@/components/panels/FreeModeCalcPanel.vue';
+import { matUpdate } from '@quasar/extras/material-icons';
+import { outlinedLightMode, outlinedDarkMode } from '@quasar/extras/material-icons-outlined';
+import DecorEllipse from '@/components/UI/DecorEllipse.vue';
+import BasePanel from '@/components/panels/BasePanel.vue';
+import AdvancedPanel from '@/components/panels/AdvancedPanel.vue';
+import FreeModePanel from '@/components/panels/FreeModePanel.vue';
 import CalculatorDisplay from '@/components/CalculatorDisplay.vue';
 import HistorySidebar from '@/components/history/HistorySidebar.vue';
-
 import { ref, computed, watchEffect } from 'vue';
 import { useHistoryStore } from '@/stores/history';
 import { useExpression } from '@/composables/useExpression';

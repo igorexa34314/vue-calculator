@@ -14,29 +14,22 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { Expression } from '@/types/Expression';
-import type { PropType } from 'vue';
+import { Expression } from '@/types/Expression';
 
 const emit = defineEmits<{
 	(e: 'update:modelValue', value: Expression): void
 }>();
 
-const props = defineProps({
-	modelValue: {
-		type: Object as PropType<Expression>,
-		default: () => ({}),
-	},
-	freeMode: {
-		type: Boolean,
-		default: false,
-	},
+const props = withDefaults(defineProps<{
+	modelValue: Expression,
+	freeMode?: boolean
+}>(), {
+	freeMode: false,
 });
 
 const exprValue = computed({
 	get: () => props.modelValue,
-	set: value => {
-		emit('update:modelValue', value);
-	},
+	set: val => emit('update:modelValue', val),
 })
 </script>
 

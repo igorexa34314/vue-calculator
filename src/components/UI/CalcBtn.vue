@@ -1,17 +1,17 @@
 <template>
-	<q-btn round dense class="panel-btn" @click="$emit('btnClick', value)" color="btn" text-color="btn-color" no-caps>
+	<q-btn round dense class="panel-btn" @click="emit('btnClick', value)" color="btn" text-color="btn-color" no-caps>
 		<slot />
 	</q-btn>
 </template>
 
 <script setup lang="ts">
+const props = defineProps<{
+	value: string
+}>();
 
-const props = defineProps({
-	value: {
-		type: [String, Number],
-		required: true,
-	}
-});
+const emit = defineEmits<{
+	(e: 'btnClick', value: typeof props.value): void
+}>();
 </script>
 
 <style scoped lang="scss">
