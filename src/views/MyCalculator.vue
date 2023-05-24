@@ -1,5 +1,6 @@
 <template>
-	<HistorySidebar :historyData="getProblemItems" v-model:drawer="drawer" @deleteItem="deleteExpr" @runItem="showExpr" />
+	<HistorySidebar :historyData="getProblemItems" v-model:drawer="drawer" @deleteItem="deleteExpression"
+		@runItem="showExpression" />
 	<div class="calculator">
 		<div class="calculator__container container">
 			<div class="calculator__header row wrap items-center justify-center q-gutter-y-md">
@@ -15,18 +16,12 @@
 					<q-tab v-for="tab in tabs" :key="tab.name" v-bind="tab" class="" content-class="calculator-tab" />
 				</q-tabs>
 			</div>
-			<CalculatorDisplay class="calculator__display" :class="activeTab === 'freeMode' ? 'q-mb-lg' : ''" v-model="expr"
-				:free-mode="activeTab === 'freeMode' ? true : false" />
+			<CalculatorDisplay class="calculator__display" :class="activeTab === 'freeMode' ? 'q-mb-lg' : ''"
+				v-model="expression" :free-mode="activeTab === 'freeMode' ? true : false" />
 			<div class="calculator__body">
 				<q-tab-panels v-model="activeTab" class="q-pa-none bg-transparent" animated swipeable>
-					<q-tab-panel :name="tabs[0].name" class="q-pa-none">
-						<BasePanel class="calculator__panel" @enterCharacter="enterCharacter" />
-					</q-tab-panel>
-					<q-tab-panel :name="tabs[1].name" class="q-pa-none">
-						<AdvancedPanel class="calculator__panel" @enterCharacter="enterCharacter" />
-					</q-tab-panel>
-					<q-tab-panel :name="tabs[2].name" class="q-pa-none">
-						<FreeModePanel class="calculator__panel" @enterCharacter="enterCharacter" />
+					<q-tab-panel v-for="tab in tabs" :key="tab.name" :name="tab.name" class="q-pa-none">
+						<component :is="tab.component" class="calculator__panel" @enterCharacter="applyCharToExp" />
 					</q-tab-panel>
 				</q-tab-panels>
 				<div class="calculator__footer">
@@ -39,18 +34,20 @@
 </template>
 
 <script setup lang="ts">
-import { matUpdate } from '@quasar/extras/material-icons';
-import { outlinedLightMode, outlinedDarkMode } from '@quasar/extras/material-icons-outlined';
 import DecorEllipse from '@/components/UI/DecorEllipse.vue';
 import BasePanel from '@/components/panels/BasePanel.vue';
 import AdvancedPanel from '@/components/panels/AdvancedPanel.vue';
 import FreeModePanel from '@/components/panels/FreeModePanel.vue';
 import CalculatorDisplay from '@/components/CalculatorDisplay.vue';
 import HistorySidebar from '@/components/history/HistorySidebar.vue';
-import { ref, computed, watchEffect } from 'vue';
+import { matUpdate } from '@quasar/extras/material-icons';
+import { outlinedLightMode, outlinedDarkMode } from '@quasar/extras/material-icons-outlined';
+import { ref, computed } from 'vue';
 import { useHistoryStore } from '@/stores/history';
 import { useExpression } from '@/composables/useExpression';
 import { useDarkMode } from '@/composables/useDarkMode';
+import { useTabs } from '@/composables/useTabs';
+import { Tabs } from '@/types/Tabs';
 
 const historyStore = useHistoryStore();
 
@@ -61,23 +58,14 @@ const drawer = ref(false);
 const { darkMode } = useDarkMode();
 
 const tabs = [
-	{ name: 'base', label: 'Base' },
-	{ name: 'advanced', label: 'Advanced' },
-	{ name: 'freeMode', label: 'Free Mode' },
+	{ name: Tabs.BASE, label: 'Base', component: BasePanel },
+	{ name: Tabs.ADVANCED, label: 'Advanced', component: AdvancedPanel },
+	{ name: Tabs.FREEMODE, label: 'Free Mode', component: FreeModePanel },
 ];
 
-const activeTab = ref<string>();
+const { activeTab } = useTabs(tabs);
 
-if (localStorage.getItem('activeTab')) {
-	activeTab.value = JSON.parse(localStorage.getItem('activeTab') || '');
-}
-else {
-	activeTab.value = tabs[0].name;
-}
-
-watchEffect(() => localStorage.setItem('activeTab', JSON.stringify(activeTab.value)));
-
-const { expr, enterCharacter, showExpr, deleteExpr } = useExpression();
+const { expression, applyCharToExp, showExpression, deleteExpression } = useExpression();
 </script>
 
 <style lang="scss">
@@ -136,7 +124,6 @@ const { expr, enterCharacter, showExpr, deleteExpr } = useExpression();
 			padding-top: 0;
 		}
 	}
-	// &-tabs {}
 	&-tab > * {
 		font-size: 0.75em !important;
 	}
@@ -191,5 +178,4 @@ const { expr, enterCharacter, showExpr, deleteExpr } = useExpression();
 	transform: translate(-50%, 0%) rotate(-15deg);
 	bottom: 0;
 }
-// .theme__toggle {}
 </style>

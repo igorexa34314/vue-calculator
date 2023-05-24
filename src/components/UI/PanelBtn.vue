@@ -14,8 +14,9 @@ const emit = defineEmits<{
 }>();
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "@/assets/styles/variables";
+
 .panel-btn {
 	width: 2.5em;
 	height: 2.5em;
@@ -32,11 +33,11 @@ const emit = defineEmits<{
 	background-color: $btn !important;
 }
 .text-btn-color {
-	color: #373737;
+	color: #373737 !important;
 }
 .body--dark {
 	.text-btn-color {
-		color: #FBFBFB;
+		color: #FBFBFB !important;
 	}
 	.bg-btn {
 		background-color: $btn-dark !important;

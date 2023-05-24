@@ -2,24 +2,24 @@
 	<div class="panel row wrap justify-between items-stretch q-pb-sm">
 		<div class="col-9 column q-px-sm justify-between q-col-gutter-y-lg">
 			<div class="actions col-grow row no-wrap q-gutter-x-md justify-between">
-				<CalcBtn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions">{{
-					action }}</CalcBtn>
+				<PanelBtn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions">{{
+					action }}</PanelBtn>
 			</div>
 			<div class="numbers col-grow row wrap items-start justify-between q-gutter-x-md q-gutter-y-lg">
-				<CalcBtn v-for="num in numbers" :key="num" :value="num"
-					v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}</CalcBtn>
+				<PanelBtn v-for="num in numbers" :key="num" :value="num"
+					v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}</PanelBtn>
 			</div>
 		</div>
 		<div class="operators col-3 column justify-between q-px-sm q-gutter-y-md items-center">
-			<CalcBtn v-for="op in operators" :key="op" :value="op" @btnClick="enterCharacter" color="operators">{{
+			<PanelBtn v-for="op in operators" :key="op" :value="op" @btnClick="enterCharacter" color="operators">{{
 				op
-			}}</CalcBtn>
+			}}</PanelBtn>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import CalcBtn from '@/components/UI/CalcBtn.vue';
+import PanelBtn from '@/components/UI/PanelBtn.vue';
 
 const emit = defineEmits<{
 	(e: 'enterCharacter', character: string): void

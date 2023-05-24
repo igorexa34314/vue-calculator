@@ -2,31 +2,31 @@
 	<div class="panel row wrap justify-between items-center q-col-gutter-y-lg q-pb-sm">
 		<div class="col-9 column q-pr-md q-pl-xs justify-between q-col-gutter-y-lg">
 			<div class="actions col-grow row no-wrap q-gutter-x-md justify-between">
-				<CalcBtn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions"
-					:icon="action === 'bs' ? outlinedBackspace : undefined">{{ action !== 'bs' ? action : '' }}</CalcBtn>
+				<PanelBtn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions"
+					:icon="action === 'bs' ? outlinedBackspace : undefined">{{ action !== 'bs' ? action : '' }}</PanelBtn>
 			</div>
 			<div class="numbers col-grow row wrap items-start justify-between q-gutter-x-md q-gutter-y-lg">
-				<CalcBtn v-for="num in numbers.slice(0, 9)" :key="num" :value="num"
-					v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}</CalcBtn>
+				<PanelBtn v-for="num in numbers.slice(0, 9)" :key="num" :value="num"
+					v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}</PanelBtn>
 			</div>
 		</div>
 		<div class="operators col-3 column q-px-sm q-gutter-y-lg items-center">
-			<CalcBtn v-for="op in operators" :key="op.name" :value="op.name" @btnClick="enterCharacter" color="operators"
-				:icon="op.icon || undefined">{{ op.icon ? '' : op.name }}</CalcBtn>
+			<PanelBtn v-for="op in operators" :key="op.name" :value="op.name" @btnClick="enterCharacter" color="operators"
+				:icon="op.icon || undefined">{{ op.icon ? '' : op.name }}</PanelBtn>
 		</div>
 		<div class="specs col-12 self-stretch row no-wrap justify-between q-gutter-x-lg">
-			<CalcBtn v-for="spec in numbers.slice(9)" :key="spec" :value="spec" @btnClick="enterCharacter">
-				{{ spec }}</CalcBtn>
+			<PanelBtn v-for="spec in numbers.slice(9)" :key="spec" :value="spec" @btnClick="enterCharacter">
+				{{ spec }}</PanelBtn>
 		</div>
 		<div class="trigonometry col-12 self-stretch row no-wrap justify-between q-gutter-x-lg">
-			<CalcBtn v-for="trg in trigonometry" :key="trg" :value="trg" @btnClick="enterCharacter">{{ trg }}</CalcBtn>
+			<PanelBtn v-for="trg in trigonometry" :key="trg" :value="trg" @btnClick="enterCharacter">{{ trg }}</PanelBtn>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import CalcBtn from '@/components/UI/CalcBtn.vue';
-import { fasSquareRootVariable, fasAngleUp, } from '@quasar/extras/fontawesome-v6';
+import PanelBtn from '@/components/UI/PanelBtn.vue';
+import { fasSquareRootVariable, fasAngleUp } from '@quasar/extras/fontawesome-v6';
 import { outlinedBackspace } from '@quasar/extras/material-icons-outlined';
 
 const emit = defineEmits<{

@@ -18,7 +18,7 @@ const emit = defineEmits<{
 	(e: 'deleteItem', exp: Expression): void;
 }>();
 
-const props = withDefaults( defineProps<{
+const props = withDefaults(defineProps<{
 	historyData: Expression[],
 	drawer?: boolean,
 }>(), {
@@ -27,7 +27,7 @@ const props = withDefaults( defineProps<{
 
 const drawerOpen = computed({
 	get: () => props.drawer,
-	set: value => emit('update:drawer', value),
+	set: value => emit('update:drawer', value)
 });
 const runItem = (exprItem: Expression) => {
 	emit('runItem', exprItem);

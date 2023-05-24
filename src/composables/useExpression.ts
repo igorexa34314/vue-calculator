@@ -1,4 +1,4 @@
-import { reactive } from 'vue';
+import { ref } from 'vue';
 import { evaluate, round } from 'mathjs';
 import { useHistoryStore } from '@/stores/history';
 import { Expression } from '@/types/Expression';
@@ -7,53 +7,52 @@ export function useExpression() {
 	const { addProblemItem, deleteProblemItem } = useHistoryStore();
 
 	const operators = ['*', '/', '-', '+', '='];
-	const hasOperatorsInTheEnd = () => operators.some(el => expr.problem.endsWith(el));
-	const expr: Expression = reactive({
+	const hasOperatorsInTheEnd = () => operators.some(el => expression.value.problem.endsWith(el));
+	const expression = ref<Expression>({
 		problem: '',
 		result: 0
 	});
-
 	const solveProblem = (): void | Boolean => {
-		if (hasOperatorsInTheEnd()) {
-			expr.problem = expr.problem.slice(0, -1);
-		}
-		if (!expr.problem) {
-			return;
-		}
 		try {
-			expr.result = round(evaluate(expr.problem), 8);
-			saveToHistory(expr.problem, expr.result);
+			if (hasOperatorsInTheEnd()) {
+				expression.value.problem = expression.value.problem.slice(0, -1);
+			}
+			if (!expression.value.problem) {
+				return;
+			}
+			expression.value.result = round(evaluate(expression.value.problem), 8);
+			saveToHistory(expression.value.problem, expression.value.result);
 		} catch (error) {
-			console.warn('Expression: "' + expr.problem + '"', error);
-			expr.result = 'Error';
+			console.warn('Expression: "' + expression.value.problem + '"', error);
+			expression.value.result = 'Error';
 		}
 	};
-	const enterCharacter = (ch: string) => {
+	const applyCharToExp = (ch: string) => {
 		switch (ch) {
 			case 'AC':
-				expr.problem = '';
-				expr.result = 0;
+				expression.value.problem = '';
+				expression.value.result = 0;
 				break;
 			case 'bs':
-				if (expr.problem) {
-					expr.problem = expr.problem.slice(0, -1);
+				if (expression.value.problem) {
+					expression.value.problem = expression.value.problem.slice(0, -1);
 				}
 				break;
 			case '+/-':
 				if (solveProblem()) {
-					expr.result = +expr.problem * -1;
-				} else if (expr.result) {
-					expr.result = +expr.result * -1;
+					expression.value.result = +expression.value.problem * -1;
+				} else if (expression.value.result) {
+					expression.value.result = +expression.value.result * -1;
 				}
-				saveToHistory(`-(${expr.problem})`, expr.result);
+				saveToHistory(`-(${expression.value.problem})`, expression.value.result);
 				break;
 			case '%':
 				if (solveProblem()) {
-					expr.result = +expr.problem / 100;
-				} else if (expr.result) {
-					expr.result = +expr.result / 100;
+					expression.value.result = +expression.value.problem / 100;
+				} else if (expression.value.result) {
+					expression.value.result = +expression.value.result / 100;
 				}
-				saveToHistory(expr.problem + '%', expr.result);
+				saveToHistory(expression.value.problem + '%', expression.value.result);
 				break;
 			case 'sqrt':
 			case 'log':
@@ -61,20 +60,20 @@ export function useExpression() {
 			case 'sin':
 			case 'cos':
 			case 'tan':
-				if (hasOperatorsInTheEnd() || !expr.problem) {
-					expr.problem += ch + '(';
+				if (hasOperatorsInTheEnd() || !expression.value.problem) {
+					expression.value.problem += ch + '(';
 				} else {
-					expr.problem = ch + `(${expr.problem})`;
+					expression.value.problem = ch + `(${expression.value.problem})`;
 				}
 				break;
 			case '×':
-				if (expr.problem && !hasOperatorsInTheEnd()) {
-					expr.problem += '*';
+				if (expression.value.problem && !hasOperatorsInTheEnd()) {
+					expression.value.problem += '*';
 				}
 				break;
 			case '÷':
-				if (expr.problem && !hasOperatorsInTheEnd()) {
-					expr.problem += '/';
+				if (expression.value.problem && !hasOperatorsInTheEnd()) {
+					expression.value.problem += '/';
 				}
 				break;
 			case '=':
@@ -82,40 +81,40 @@ export function useExpression() {
 				break;
 			case '.':
 				if (
-					!expr.problem
+					!expression.value.problem
 						.split(/\s*[-+\/*]\s*/g)
 						.slice(-1)
 						.includes('.')
 				) {
-					expr.problem += ch.toString();
+					expression.value.problem += ch.toString();
 				}
 				break;
 			default:
-				expr.problem += ch.toString();
+				expression.value.problem += ch.toString();
 				break;
 		}
 	};
-	const showExpr = (ex: Expression) => {
-		expr.problem = ex.problem;
-		expr.result = ex.result;
+	const showExpression = (exp: Expression) => {
+		expression.value.problem = exp.problem;
+		expression.value.result = exp.result;
 	};
-	const deleteExpr = (exprItem: Expression) => {
-		deleteProblemItem(exprItem);
+	const deleteExpression = (exp: Expression) => {
+		deleteProblemItem(exp);
 	};
-	const saveToHistory = (pr: Expression['problem'], res: Expression['result']) => {
-		if (pr && !isNaN(+res) && res !== Infinity) {
+	const saveToHistory = (problem: Expression['problem'], result: Expression['result']) => {
+		if (problem && !isNaN(+result) && result !== Infinity) {
 			const problemItem = {
-				problem: pr,
-				result: res
+				problem,
+				result
 			};
 			addProblemItem(problemItem);
 		}
 	};
 
 	return {
-		expr,
-		enterCharacter,
-		showExpr,
-		deleteExpr
+		expression,
+		applyCharToExp,
+		showExpression,
+		deleteExpression
 	};
 }
