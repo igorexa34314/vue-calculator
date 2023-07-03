@@ -9,7 +9,7 @@ export default ({ mode }) => {
 	process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
 	return defineConfig({
-		base: process.env.VITE_BASE_URL || '/',
+		base: process.env.VITE_BASE || '/',
 		server: {
 			port: +process.env.VITE_PORT || 3000
 		},

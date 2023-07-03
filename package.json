@@ -5,8 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite --mode dev",
-		"build": "vue-tsc && vite build --mode prod",
-		"preview": "vite preview --mode prod"
+		"build": "vue-tsc && vite build",
+		"preview": "vite preview"
 	},
 	"dependencies": {
 		"@quasar/extras": "^1.16.4",
