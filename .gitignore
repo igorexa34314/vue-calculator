@@ -26,7 +26,7 @@ node_modules
 .env.dev
 *.local
 
-#Yarn > 2
+#Yarn PnP
 .pnp.*
 .yarn/*
 !.yarn/patches

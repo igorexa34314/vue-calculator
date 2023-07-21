@@ -1,12 +1,21 @@
 <template>
-	<q-btn round dense class="panel-btn" @click="emit('btnClick', value)" color="btn" text-color="btn-color" no-caps>
-		<slot />
-	</q-btn>
+	<n-button circle class="panel-btn" @click="emit('btnClick', value)" size="large" text-color="btn-color" no-caps>
+		<template #default>
+			<slot />
+		</template>
+		<template v-if="icon" #icon>
+			<n-icon :component="icon" />
+		</template>
+	</n-button>
 </template>
 
 <script setup lang="ts">
+import { Component } from 'vue';
+import { NButton, NIcon } from 'naive-ui';
+
 const props = defineProps<{
-	value: string
+	value: string,
+	icon?: Component
 }>();
 
 const emit = defineEmits<{
@@ -15,8 +24,6 @@ const emit = defineEmits<{
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/variables";
-
 .panel-btn {
 	width: 2.5em;
 	height: 2.5em;
@@ -29,18 +36,18 @@ const emit = defineEmits<{
 		font-size: 0.75em;
 	}
 }
-.bg-btn {
-	background-color: $btn !important;
-}
-.text-btn-color {
-	color: #373737 !important;
-}
-.body--dark {
-	.text-btn-color {
-		color: #FBFBFB !important;
-	}
-	.bg-btn {
-		background-color: $btn-dark !important;
-	}
-}
+// .bg-btn {
+// 	background-color: $btn !important;
+// }
+// .text-btn-color {
+// 	color: #373737 !important;
+// }
+// .body--dark {
+// 	.text-btn-color {
+// 		color: #FBFBFB !important;
+// 	}
+// 	.bg-btn {
+// 		background-color: $btn-dark !important;
+// 	}
+// }
 </style>

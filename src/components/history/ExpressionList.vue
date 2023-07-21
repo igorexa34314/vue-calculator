@@ -1,12 +1,13 @@
 <template>
-	<q-list v-if="items.length > 0" class="expr-list q-py-sm">
+	<n-list v-if="items.length > 0" hoverable clickable class="expr-list q-py-sm">
 		<ExpressionItem v-for="(item, index) in items" :expression="item" :key="index"
 			@runItem="item => emit('runItem', item)" @deleteItem="item => emit('deleteItem', item)" />
-	</q-list>
+	</n-list>
 	<div class="q-pa-xl" v-else>You have no history</div>
 </template>
 
 <script setup lang="ts">
+import { NList } from 'naive-ui';
 import ExpressionItem from '@/components/history/ExpressionItem.vue';
 import { Expression } from '@/types/Expression';
 

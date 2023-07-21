@@ -1,26 +1,28 @@
 <template>
-	<q-item clickable class="expr-item q-pa-sm">
-		<q-item-section v-ripple class="q-pa-md" @click="emit('runItem', expression)">
-			<q-item-label lines="2" class="expr-item__problem q-mb-xs">{{ expression.problem + ' = ' }}</q-item-label>
-			<q-item-label lines="1" class="expr-item__result">{{ expression.result }}</q-item-label>
-		</q-item-section>
-		<q-item-section side>
-			<q-btn flat rounded text-color="icons" padding="sm" dense :icon="outlinedContentCopy"
-				@click="copyProblem(expression)"></q-btn>
-			<q-tooltip anchor="bottom middle" self="bottom middle" no-parent-event ref="copyMessage"
-				class="text-caption">Copied to clipboard</q-tooltip>
-		</q-item-section>
-		<q-item-section side>
-			<q-btn flat rounded text-color="icons" padding="sm" dense :icon="matDelete" @click="emit('deleteItem', expression)" />
-		</q-item-section>
-	</q-item>
+	<n-list-item class="expr-item q-pa-sm">
+		<n-thing v-ripple class="q-pa-md" @click="emit('runItem', expression)">
+			<template #header>
+				<div lines="2" class="expr-item__problem q-mb-xs">{{ expression.problem + ' = ' }}</div>
+			</template>
+			<template #description>
+				<div lines="1" class="expr-item__result">{{ expression.result }}</div>
+			</template>
+		</n-thing>
+		<template #suffix>
+			<n-button flat rounded text-color="icons" padding="sm" dense :icon="ContentCopyOutlined"
+				@click="copyProblem(expression)" />
+			<!-- <n-tooltip anchor="bottom middle" self="bottom middle" no-parent-event ref="copyMessage"
+				class="text-caption">Copied to clipboard</n-tooltip> -->
+			<n-button flat rounded text-color="icons" padding="sm" dense :icon="DeleteFilled"
+				@click="emit('deleteItem', expression)" />
+		</template>
+	</n-list-item>
 </template>
 
 <script setup lang="ts">
-import { matDelete } from '@quasar/extras/material-icons';
-import { outlinedContentCopy } from '@quasar/extras/material-icons-outlined';
+import { NListItem, NButton, NThing } from 'naive-ui';
+import { DeleteFilled, ContentCopyOutlined } from '@vicons/material';
 import { ref } from 'vue';
-import { QTooltip } from 'quasar';
 import { Expression } from '@/types/Expression';
 
 const props = defineProps<{
@@ -32,12 +34,11 @@ const emit = defineEmits<{
 	(e: 'deleteItem', exp: Expression): void;
 }>();
 
-const copyMessage = ref<QTooltip>();
 const copyProblem = async (exp: Expression) => {
 	try {
 		await navigator.clipboard.writeText(exp.problem + ' = ' + exp.result);
-		copyMessage.value?.show();
-		setTimeout(() => copyMessage.value?.hide(), 2000);
+		// copyMessage.value?.show();
+		// setTimeout(() => copyMessage.value?.hide(), 2000);
 	} catch (err) {
 		alert('Failed to copy');
 	}

@@ -2,7 +2,6 @@ import { defineConfig, loadEnv } from 'vite';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import vue from '@vitejs/plugin-vue';
-import { quasar, transformAssetUrls } from '@quasar/vite-plugin';
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -18,15 +17,7 @@ export default ({ mode }) => {
 				'@': resolve(dirname(fileURLToPath(import.meta.url)), './src')
 			}
 		},
-		plugins: [
-			vue({
-				template: { transformAssetUrls }
-			}),
-			quasar({
-				autoImportComponentCase: 'kebab',
-				sassVariables: 'src/assets/styles/variables.scss'
-			})
-		],
+		plugins: [vue()],
 		define: {
 			'process.env.DEBUG': false
 		}

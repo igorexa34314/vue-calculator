@@ -5,25 +5,26 @@
 		<div class="calculator__container container">
 			<div class="calculator__header row wrap items-center justify-center q-gutter-y-md">
 				<div class="theme__toggle col-8 row inline justify-end">
-					<q-toggle v-model="darkMode" size="110px" keep-color :checked-icon="outlinedDarkMode" color="blue"
-						:unchecked-icon="outlinedLightMode" />
+					<DarkModeToggle v-model="darkMode" />
 				</div>
-				<div class="history__btn col-grow row inline justify-end"><q-btn dense size="lg" flat @click="drawer = !drawer"
-						text-color="icons" :icon="matUpdate" rounded></q-btn>
+				<div class="history__btn col-grow row inline justify-end">
+					<n-button dense size="large" flat @click="drawer = !drawer" text-color="icons" :icon="UpdateFilled"
+						rounded></n-button>
 				</div>
-				<q-tabs dense v-model="activeTab" class="bg-none text-accent shadow-none" content-class="calculator-tabs"
+				<n-tabs dense v-model:value="activeTab" class="bg-none text-accent shadow-none" content-class="calculator-tabs"
 					shrink>
-					<q-tab v-for="tab in tabs" :key="tab.name" v-bind="tab" class="" content-class="calculator-tab" />
-				</q-tabs>
+					<n-tab v-for="tab in tabs" :key="tab.name" :name="tab.name" class="" content-class="calculator-tab">{{
+						tab.label }}</n-tab>
+				</n-tabs>
 			</div>
 			<CalculatorDisplay class="calculator__display" :class="activeTab === 'freeMode' ? 'q-mb-lg' : ''"
 				v-model="expression" :free-mode="activeTab === 'freeMode' ? true : false" />
 			<div class="calculator__body">
-				<q-tab-panels v-model="activeTab" class="q-pa-none bg-transparent" animated swipeable>
-					<q-tab-panel v-for="tab in tabs" :key="tab.name" :name="tab.name" class="q-pa-none">
+				<n-tabs>
+					<n-tab-pane v-for="tab in tabs" :key="tab.name" :name="tab.name" class="q-pa-none">
 						<component :is="tab.component" class="calculator__panel" @enterCharacter="applyCharToExp" />
-					</q-tab-panel>
-				</q-tab-panels>
+					</n-tab-pane>
+				</n-tabs>
 				<div class="calculator__footer">
 					<div class="calculator__decor"><span></span></div>
 				</div>
@@ -34,18 +35,19 @@
 </template>
 
 <script setup lang="ts">
+import DarkModeToggle from '@/components/UI/DarkModeToggle.vue';
+import { NTabs, NTab, NTabPane, NButton } from 'naive-ui';
 import DecorEllipse from '@/components/UI/DecorEllipse.vue';
 import BasePanel from '@/components/panels/BasePanel.vue';
 import AdvancedPanel from '@/components/panels/AdvancedPanel.vue';
 import FreeModePanel from '@/components/panels/FreeModePanel.vue';
 import CalculatorDisplay from '@/components/CalculatorDisplay.vue';
 import HistorySidebar from '@/components/history/HistorySidebar.vue';
-import { matUpdate } from '@quasar/extras/material-icons';
-import { outlinedLightMode, outlinedDarkMode } from '@quasar/extras/material-icons-outlined';
+import { UpdateFilled } from '@vicons/material';
 import { ref, computed } from 'vue';
 import { useHistoryStore } from '@/stores/history';
 import { useExpression } from '@/composables/useExpression';
-import { useDarkMode } from '@/composables/useDarkMode';
+// import { useDarkMode } from '@/composables/useDarkMode';
 import { useTabs } from '@/composables/useTabs';
 import { Tabs } from '@/types/Tabs';
 
@@ -55,7 +57,8 @@ const getProblemItems = computed(() => historyStore.problemItems);
 
 const drawer = ref(false);
 
-const { darkMode } = useDarkMode();
+// const { darkMode } = useDarkMode();
+const darkMode = ref(false);
 
 const tabs = [
 	{ name: Tabs.BASE, label: 'Base', component: BasePanel },

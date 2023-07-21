@@ -1,10 +1,9 @@
 import { ref, watchEffect } from 'vue';
-import { useQuasar } from 'quasar';
+import { darkTheme, lightTheme } from 'naive-ui';
 
 const DARK_MODE_DEFAULT = false;
 
 export function useDarkMode() {
-	const $q = ref(useQuasar());
 	const darkMode = ref(DARK_MODE_DEFAULT);
 
 	const getDarkMode = () => {
@@ -15,7 +14,7 @@ export function useDarkMode() {
 	getDarkMode();
 
 	const toggleDarkMode = (): void => {
-		$q.value.dark.set(darkMode.value);
+		// $q.value.dark.set(darkMode.value);
 		localStorage.setItem('darkMode', JSON.stringify(darkMode.value));
 	};
 	watchEffect(toggleDarkMode);

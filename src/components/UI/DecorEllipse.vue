@@ -27,7 +27,7 @@
 <script setup lang="ts">
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .decor-elipse {
 	pointer-events: none;
 	user-select: none;
