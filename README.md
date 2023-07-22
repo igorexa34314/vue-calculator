@@ -6,7 +6,7 @@
 
 Try it on:\
 [Netlify](https://vue-calculator-igorexa34314.netlify.app/ "Vue calculator")\
-Or:\
+[Varcel](https://vue-calculator2023.vercel.app/ "Vue calculator")\
 [Github Pages](https://igorexa34314.github.io/vue-calculator/ "Vue calculator")
 
 <p float="left">
