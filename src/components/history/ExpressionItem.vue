@@ -9,18 +9,24 @@
 			</template>
 		</n-thing>
 		<template #suffix>
-			<n-button flat rounded text-color="icons" padding="sm" dense :icon="ContentCopyOutlined"
-				@click="copyProblem(expression)" />
-			<!-- <n-tooltip anchor="bottom middle" self="bottom middle" no-parent-event ref="copyMessage"
+			<div class="di" style="display: flex; gap: 0.75em;">
+				<n-button flat rounded text-color="icons" padding="sm" dense @click="copyProblem(expression)" v-slot:icon>
+					<n-icon :component="ContentCopyOutlined" />
+				</n-button>
+				<!-- <n-tooltip anchor="bottom middle" self="bottom middle" no-parent-event ref="copyMessage"
 				class="text-caption">Copied to clipboard</n-tooltip> -->
-			<n-button flat rounded text-color="icons" padding="sm" dense :icon="DeleteFilled"
-				@click="emit('deleteItem', expression)" />
+
+				<n-button flat rounded text-color="icons" padding="sm" dense @click="emit('deleteItem', expression)"
+					v-slot:icon>
+					<n-icon :component="DeleteFilled" />
+				</n-button>
+			</div>
 		</template>
 	</n-list-item>
 </template>
 
 <script setup lang="ts">
-import { NListItem, NButton, NThing } from 'naive-ui';
+import { NListItem, NButton, NThing, NIcon } from 'naive-ui';
 import { DeleteFilled, ContentCopyOutlined } from '@vicons/material';
 import { ref } from 'vue';
 import { Expression } from '@/types/Expression';

@@ -1,5 +1,6 @@
 <template>
-	<n-button circle class="panel-btn" @click="emit('btnClick', value)" size="large" text-color="btn-color" no-caps>
+	<n-button circle class="panel-btn" @click="emit('btnClick', value)" :theme-overrides="buttonThemeOverrides" size="large"
+		block>
 		<template #default>
 			<slot />
 		</template>
@@ -11,7 +12,9 @@
 
 <script setup lang="ts">
 import { Component } from 'vue';
-import { NButton, NIcon } from 'naive-ui';
+import { NButton, NIcon, ButtonProps } from 'naive-ui';
+
+type ButtonThemeOverrides = NonNullable<ButtonProps['themeOverrides']>
 
 const props = defineProps<{
 	value: string,
@@ -21,6 +24,14 @@ const props = defineProps<{
 const emit = defineEmits<{
 	(e: 'btnClick', value: typeof props.value): void
 }>();
+
+const buttonThemeOverrides: ButtonThemeOverrides = {
+	// heightMedium: '50px',
+	heightLarge: '55px',
+	borderRadiusLarge: '50%',
+
+	// textColor: 'rgba(24, 127, 231, 0.5)'
+}
 </script>
 
 <style lang="scss">

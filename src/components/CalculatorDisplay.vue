@@ -1,18 +1,21 @@
 <template>
 	<div class="display column no-wrap">
 		<div class="display__input row">
-			<q-input ref="problemInput" v-model.trim="exprValue.problem" class="col-grow" input-class="problem" borderless
+			<n-input ref="problemInput" v-model:value="exprValue.problem" class="col-grow" input-class="problem" borderless
 				:dense="!freeMode" autocomplete="off" :autofocus="freeMode" :readonly="!freeMode" :autogrow="freeMode"
 				:placeholder="freeMode ? 'Type your full expression' : ''" />
 		</div>
-		<div class="display__input row no-wrap items-center" :class="freeMode ? 'q-mt-md' : ''">
-			<span class="equals col-1">=</span>
-			<q-input v-model="exprValue.result" class="q-pl-lg col-11" input-class="result" borderless dense readonly />
-		</div>
+		<n-grid cols="8" class="display__input row no-wrap items-center" :class="freeMode ? 'q-mt-md' : ''">
+			<n-gi class="equals col-1">=</n-gi>
+			<n-gi span="7" class="equals col-1"> <n-input v-model:value="exprValue.result" class="q-pl-lg col-11"
+					input-class="result" borderless dense readonly />
+			</n-gi>
+		</n-grid>
 	</div>
 </template>
 
 <script setup lang="ts">
+import { NGrid, NGi, NInput } from 'naive-ui';
 import { computed } from 'vue';
 import { Expression } from '@/types/Expression';
 
@@ -28,8 +31,8 @@ const props = withDefaults(defineProps<{
 });
 
 const exprValue = computed({
-	get: () => props.modelValue,
-	set: val => emit('update:modelValue', val),
+	get: () => ({ problem: props.modelValue.problem, result: props.modelValue.result.toString() }),
+	set: (val: { problem: string; result: string }) => emit('update:modelValue', val),
 })
 </script>
 

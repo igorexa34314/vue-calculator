@@ -1,14 +1,15 @@
 <template>
-	<div class="panel row wrap justify-between items-stretch q-pb-sm">
-		<div class="actions col-grow row no-wrap q-gutter-x-md justify-between">
-			<PanelBtn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions">{{
+	<n-grid cols="4" x-gap="12" y-gap="12" class="panel row wrap justify-between items-stretch q-pb-sm">
+		<n-gi v-for="action in actions" :key="action" class="actions col-grow row no-wrap q-gutter-x-md justify-between">
+			<PanelBtn :value="action" @btnClick="enterCharacter">{{
 				action
 			}}</PanelBtn>
-		</div>
-	</div>
+		</n-gi>
+	</n-grid>
 </template>
 
 <script setup lang="ts">
+import { NGrid, NGi } from 'naive-ui';
 import PanelBtn from '@/components/UI/PanelBtn.vue';
 
 const emit = defineEmits<{

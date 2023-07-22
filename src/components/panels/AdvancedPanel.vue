@@ -1,30 +1,47 @@
 <template>
-	<div class="panel row wrap justify-between items-center q-col-gutter-y-lg q-pb-sm">
-		<div class="col-9 column q-pr-md q-pl-xs justify-between q-col-gutter-y-lg">
-			<div class="actions col-grow row no-wrap q-gutter-x-md justify-between">
-				<PanelBtn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions"
-					:icon="action === 'bs' ? BackspaceOutlined : undefined">{{ action !== 'bs' ? action : '' }}</PanelBtn>
-			</div>
-			<div class="numbers col-grow row wrap items-start justify-between q-gutter-x-md q-gutter-y-lg">
-				<PanelBtn v-for="num in numbers.slice(0, 9)" :key="num" :value="num"
-					v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}</PanelBtn>
-			</div>
-		</div>
-		<div class="operators col-3 column q-px-sm q-gutter-y-lg items-center">
-			<PanelBtn v-for="op in operators" :key="op.name" :value="op.name" @btnClick="enterCharacter" 
-				:icon="op.icon || undefined">{{ op.icon ? '' : op.name }}</PanelBtn>
-		</div>
-		<div class="specs col-12 self-stretch row no-wrap justify-between q-gutter-x-lg">
-			<PanelBtn v-for="spec in numbers.slice(9)" :key="spec" :value="spec" @btnClick="enterCharacter">
-				{{ spec }}</PanelBtn>
-		</div>
-		<div class="trigonometry col-12 self-stretch row no-wrap justify-between q-gutter-x-lg">
-			<PanelBtn v-for="trg in trigonometry" :key="trg" :value="trg" @btnClick="enterCharacter">{{ trg }}</PanelBtn>
-		</div>
-	</div>
+	<n-grid cols="12" x-gap="12" y-gap="12" class="panel row wrap justify-between items-center q-col-gutter-y-lg q-pb-sm">
+		<n-gi span="9" class="col-9 column q-pr-md q-pl-xs justify-between q-col-gutter-y-lg">
+			<n-grid cols="3" x-gap="12" y-gap="12" class="actions col-grow row no-wrap q-gutter-x-md justify-between">
+				<n-gi v-for="action in actions" :key="action">
+					<PanelBtn :value="action" @btnClick="enterCharacter"
+						:icon="action === 'bs' ? BackspaceOutlined : undefined">{{ action !== 'bs' ? action : '' }}</PanelBtn>
+				</n-gi>
+				<n-gi v-for="num in numbers.slice(0, 9)" :key="num"
+					class="numbers col-grow row wrap items-start justify-between q-gutter-x-md q-gutter-y-lg">
+					<PanelBtn :value="num" v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}
+					</PanelBtn>
+				</n-gi>
+			</n-grid>
+		</n-gi>
+		<n-gi span="3" class="operators col-3 column q-px-sm q-gutter-y-lg items-center">
+			<n-grid cols="1" x-gap="12" y-gap="12">
+				<n-gi v-for="op in operators" :key="op.name">
+					<PanelBtn :value="op.name" @btnClick="enterCharacter" :icon="op.icon || undefined">{{ op.icon ? '' : op.name
+					}}</PanelBtn>
+				</n-gi>
+			</n-grid>
+		</n-gi>
+		<n-gi span="12" class="specs col-12 self-stretch row no-wrap justify-between q-gutter-x-lg">
+			<n-grid cols="4" x-gap="12" y-gap="12">
+				<n-gi v-for="spec in numbers.slice(9)" :key="spec">
+					<PanelBtn :value="spec" @btnClick="enterCharacter">
+						{{ spec }}</PanelBtn>
+				</n-gi>
+			</n-grid>
+		</n-gi>
+		<n-gi span="12">
+			<n-grid cols="4" x-gap="12" y-gap="12"
+				class="trigonometry col-12 self-stretch row no-wrap justify-between q-gutter-x-lg">
+				<n-gi v-for="trg in trigonometry" :key="trg">
+					<PanelBtn :value="trg" @btnClick="enterCharacter">{{ trg }}</PanelBtn>
+				</n-gi>
+			</n-grid>
+		</n-gi>
+	</n-grid>
 </template>
 
 <script setup lang="ts">
+import { NGrid, NGi } from 'naive-ui';
 import PanelBtn from '@/components/UI/PanelBtn.vue';
 import { BackspaceOutlined } from '@vicons/material';
 import { SquareRootAlt, AngleUp } from '@vicons/fa';

@@ -1,5 +1,5 @@
 <template>
-	<n-switch v-model:value="darkMode" size="large" v-bind="{ railStyle }" color="blue">
+	<n-switch :on-update:value="setDarkMode" size="large" v-bind="{ railStyle }" color="blue">
 		<template #checked-icon>
 			<n-icon :component="DarkModeOutlined" />
 		</template>
@@ -10,24 +10,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, CSSProperties } from 'vue';
+import { CSSProperties } from 'vue';
 import { NSwitch, NIcon } from 'naive-ui';
 import { DarkModeOutlined, LightModeOutlined } from '@vicons/material';
+import { useDarkModeStore } from '@/stores/darkMode';
 
-const props = withDefaults(defineProps<{
-	modelValue?: boolean;
-}>(), {
-	modelValue: false
-});
-
-const emit = defineEmits<{
-	(e: 'update:modelValue', value: boolean): void;
-}>();
-
-const darkMode = computed({
-	get: () => props.modelValue,
-	set: (val: boolean) => emit('update:modelValue', val)
-});
+const { setDarkMode } = useDarkModeStore();
 
 const railStyle = ({
 	focused,

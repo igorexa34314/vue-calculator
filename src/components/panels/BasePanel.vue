@@ -1,24 +1,33 @@
 <template>
-	<div class="panel row wrap justify-between items-stretch q-pb-sm">
-		<div class="col-9 column q-px-sm justify-between q-col-gutter-y-lg">
-			<div class="actions col-grow row no-wrap q-gutter-x-md justify-between">
-				<PanelBtn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter">{{
-					action }}</PanelBtn>
-			</div>
-			<div class="numbers col-grow row wrap items-start justify-between q-gutter-x-md q-gutter-y-lg">
-				<PanelBtn v-for="num in numbers" :key="num" :value="num"
-					v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}</PanelBtn>
-			</div>
-		</div>
-		<div class="operators col-3 column justify-between q-px-sm q-gutter-y-md items-center">
-			<PanelBtn v-for="op in operators" :key="op" :value="op" @btnClick="enterCharacter">{{
-				op
-			}}</PanelBtn>
-		</div>
-	</div>
+	<n-grid cols="12" x-gap="12" y-gap="12" class="panel row wrap justify-between items-stretch q-pb-sm">
+		<n-gi span="9" class="col-9 column q-px-sm justify-between q-col-gutter-y-lg">
+			<n-grid cols="3" x-gap="12" y-gap="12">
+				<n-gi v-for="action in actions" :key="action"
+					class="actions col-grow row no-wrap q-gutter-x-md justify-between">
+					<PanelBtn :value="action" @btnClick="enterCharacter">{{
+						action }}</PanelBtn>
+				</n-gi>
+				<n-gi v-for="num in numbers" :key="num"
+					class="numbers col-grow row wrap items-start justify-between q-gutter-x-md q-gutter-y-lg">
+					<PanelBtn :value="num" v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}
+					</PanelBtn>
+				</n-gi>
+			</n-grid>
+		</n-gi>
+		<n-gi span="3">
+			<n-grid cols="1" x-gap="12" y-gap="12">
+				<n-gi v-for="op in operators" :key="op">
+					<PanelBtn :value="op" @btnClick="enterCharacter" class="operators">{{
+						op
+					}}</PanelBtn>
+				</n-gi>
+			</n-grid>
+		</n-gi>
+	</n-grid>
 </template>
 
 <script setup lang="ts">
+import { NGrid, NGi } from 'naive-ui';
 import PanelBtn from '@/components/UI/PanelBtn.vue';
 
 const emit = defineEmits<{

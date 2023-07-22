@@ -4,13 +4,18 @@
 	<div class="calculator">
 		<div class="calculator__container container">
 			<div class="calculator__header row wrap items-center justify-center q-gutter-y-md">
-				<div class="theme__toggle col-8 row inline justify-end">
-					<DarkModeToggle v-model="darkMode" />
-				</div>
-				<div class="history__btn col-grow row inline justify-end">
-					<n-button dense size="large" flat @click="drawer = !drawer" text-color="icons" :icon="UpdateFilled"
-						rounded></n-button>
-				</div>
+				<n-grid cols="5">
+
+					<n-gi span="4" class="theme__toggle">
+						<DarkModeToggle />
+					</n-gi>
+					<n-gi span="1" class="history__btn col-grow row inline justify-end">
+						<n-button dense size="large" flat @click="drawer = !drawer" text-color="icons" v-slot:icon circle>
+							<n-icon :component="UpdateFilled" />
+						</n-button>
+					</n-gi>
+				</n-grid>
+
 				<n-tabs dense v-model:value="activeTab" class="bg-none text-accent shadow-none" content-class="calculator-tabs"
 					shrink>
 					<n-tab v-for="tab in tabs" :key="tab.name" :name="tab.name" class="" content-class="calculator-tab">{{
@@ -20,11 +25,13 @@
 			<CalculatorDisplay class="calculator__display" :class="activeTab === 'freeMode' ? 'q-mb-lg' : ''"
 				v-model="expression" :free-mode="activeTab === 'freeMode' ? true : false" />
 			<div class="calculator__body">
-				<n-tabs>
-					<n-tab-pane v-for="tab in tabs" :key="tab.name" :name="tab.name" class="q-pa-none">
-						<component :is="tab.component" class="calculator__panel" @enterCharacter="applyCharToExp" />
-					</n-tab-pane>
-				</n-tabs>
+				<div>
+					<Transition>
+						<component v-if="tabs.some(t => t.name === activeTab)"
+							:is="tabs.find(t=>t.name === activeTab)?.component" class="calculator__panel"
+							@enterCharacter="applyCharToExp" />
+					</Transition>
+				</div>
 				<div class="calculator__footer">
 					<div class="calculator__decor"><span></span></div>
 				</div>
@@ -36,7 +43,7 @@
 
 <script setup lang="ts">
 import DarkModeToggle from '@/components/UI/DarkModeToggle.vue';
-import { NTabs, NTab, NTabPane, NButton } from 'naive-ui';
+import { NTabs, NTab, NButton, NGrid, NGi, NIcon } from 'naive-ui';
 import DecorEllipse from '@/components/UI/DecorEllipse.vue';
 import BasePanel from '@/components/panels/BasePanel.vue';
 import AdvancedPanel from '@/components/panels/AdvancedPanel.vue';
@@ -157,6 +164,20 @@ const { expression, applyCharToExp, showExpression, deleteExpression } = useExpr
 			}
 		}
 	}
+}
+.v-enter-active,
+.v-leave-active {
+	transition: all 0.3s ease 0.2s;
+}
+
+.v-enter-from,
+.v-leave-to {
+	transform: translate(-100%);
+	opacity: 0;
+}
+.theme__toggle {
+	display: flex;
+	justify-content: center;
 }
 .container {
 	& > div {
