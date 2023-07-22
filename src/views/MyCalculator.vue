@@ -63,7 +63,7 @@ const tabs = [
 	{ name: Tabs.FREEMODE, label: 'Free Mode', component: FreeModePanel },
 ];
 
-const { activeTab } = useTabs(tabs);
+const { activeTab } = useTabs(tabs[0].name);
 
 const { expression, applyCharToExp, showExpression, deleteExpression } = useExpression();
 </script>
@@ -92,6 +92,9 @@ const { expression, applyCharToExp, showExpression, deleteExpression } = useExpr
 .calculator {
 	position: relative;
 	overflow: hidden;
+	@media(max-width: 670px) {
+		transform: scale(0.8);
+	}
 	background: linear-gradient(166.34deg, #FEFEFE 0%, #F9F9F9 12.84%, #F3F3F3 32.53%, #E5E5E5 100%);
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 1.5em;

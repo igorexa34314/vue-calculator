@@ -21,12 +21,6 @@ const enterCharacter = (ch: string) => emit('enterCharacter', ch);
 </script>
 
 <style lang="scss">
-.operators {
-	@media(max-width: $breakpoint-sm) {
-		padding-left: 0 !important;
-		padding-right: 0 !important;
-	}
-}
 .bg-actions {
 	background-color: rgba(104, 94, 190, 0.3) !important;
 }

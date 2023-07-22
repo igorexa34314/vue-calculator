@@ -1,23 +1,27 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
+import { saveToLocalStorage, getFromLocalStorage } from '@/utils/localStorage';
 import { Expression } from '@/types/Expression';
 
-export const useHistoryStore = defineStore('history', () => {
-	const problemItems = ref<Expression[]>(JSON.parse(localStorage.getItem('history') || '[]'));
+const HISTORY_KEY = 'history';
 
-	const saveToLocalStorage = () =>
-		localStorage.setItem('history', JSON.stringify(problemItems.value));
+export const useHistoryStore = defineStore('history', () => {
+	const problemItems = ref<Expression[]>(getFromLocalStorage(HISTORY_KEY) ?? []);
 
 	const addProblemItem = (problemItem: Expression) => {
 		for (let item of problemItems.value) {
 			if (item.problem === problemItem.problem) return;
 		}
 		problemItems.value.push(problemItem);
-		saveToLocalStorage();
 	};
+
 	const deleteProblemItem = (problemItem: Expression) => {
 		problemItems.value = problemItems.value.filter(item => item.problem !== problemItem.problem);
-		saveToLocalStorage();
 	};
+
+	watchEffect(() => {
+		saveToLocalStorage(HISTORY_KEY, problemItems.value);
+	});
+
 	return { problemItems, addProblemItem, deleteProblemItem };
 });

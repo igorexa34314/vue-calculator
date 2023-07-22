@@ -3,7 +3,7 @@ import { evaluate, round } from 'mathjs';
 import { useHistoryStore } from '@/stores/history';
 import { Expression } from '@/types/Expression';
 
-export function useExpression() {
+export const useExpression = () => {
 	const { addProblemItem, deleteProblemItem } = useHistoryStore();
 
 	const operators = ['*', '/', '-', '+', '='];
@@ -117,4 +117,4 @@ export function useExpression() {
 		showExpression,
 		deleteExpression
 	};
-}
+};

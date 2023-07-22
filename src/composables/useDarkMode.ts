@@ -1,26 +1,18 @@
 import { ref, watchEffect } from 'vue';
 import { useQuasar } from 'quasar';
+import { saveToLocalStorage, getFromLocalStorage } from '@/utils/localStorage';
 
-const DARK_MODE_DEFAULT = false;
+const DARK_MODE_DEFAULT = import.meta.env.VITE_APP_THEME === 'dark';
+const DARK_MODE_KEY = 'darkMode';
 
-export function useDarkMode() {
-	const $q = ref(useQuasar());
-	const darkMode = ref(DARK_MODE_DEFAULT);
+export const useDarkMode = () => {
+	const $q = useQuasar();
+	const darkMode = ref(getFromLocalStorage<boolean>(DARK_MODE_KEY) ?? DARK_MODE_DEFAULT);
 
-	const getDarkMode = () => {
-		if (localStorage.getItem('darkMode')) {
-			darkMode.value = JSON.parse(localStorage.getItem('darkMode') as string);
-		}
-	};
-	getDarkMode();
+	watchEffect(() => {
+		$q.dark.set(darkMode.value);
+		saveToLocalStorage(DARK_MODE_KEY, darkMode.value);
+	});
 
-	const toggleDarkMode = (): void => {
-		$q.value.dark.set(darkMode.value);
-		localStorage.setItem('darkMode', JSON.stringify(darkMode.value));
-	};
-	watchEffect(toggleDarkMode);
-
-	return {
-		darkMode
-	};
-}
+	return { darkMode };
+};

@@ -24,5 +24,3 @@ cd ./vue-calculator
 yarn
 yarn dev
 ```
-
-Dont forget to change the base path in [vite.config.ts](vite.config.ts) when you using dev mode!!!

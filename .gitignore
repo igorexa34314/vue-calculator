@@ -21,12 +21,12 @@ node_modules
 *.sln
 *.sw?
 
-#Environment variables
+#Env vars
 .env
 .env.dev
 *.local
 
-#Yarn > 2
+#Yarn
 .pnp.*
 .yarn/*
 !.yarn/patches

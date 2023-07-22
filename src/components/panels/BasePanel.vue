@@ -1,6 +1,6 @@
 <template>
 	<div class="panel row wrap justify-between items-stretch q-pb-sm">
-		<div class="col-9 column q-px-sm justify-between q-col-gutter-y-lg">
+		<div class="col-9 column q-pr-sm justify-between q-col-gutter-y-lg">
 			<div class="actions col-grow row no-wrap q-gutter-x-md justify-between">
 				<PanelBtn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions">{{
 					action }}</PanelBtn>
@@ -10,10 +10,11 @@
 					v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}</PanelBtn>
 			</div>
 		</div>
-		<div class="operators col-3 column justify-between q-px-sm q-gutter-y-md items-center">
-			<PanelBtn v-for="op in operators" :key="op" :value="op" @btnClick="enterCharacter" color="operators">{{
-				op
-			}}</PanelBtn>
+		<div class="operators col-3 column justify-between q-pl-md q-gutter-y-md items-center">
+			<PanelBtn v-for="(op, index) in operators" :key="op" :value="op" @btnClick="enterCharacter"
+				:class="{ 'q-mb-xs': index === 0 }" color="operators">{{
+					op
+				}}</PanelBtn>
 		</div>
 	</div>
 </template>
@@ -36,19 +37,6 @@ const enterCharacter = (ch: string) => emit('enterCharacter', ch);
 .body--dark {
 	.bg-operators {
 		background-color: $blue-grey-8 !important;
-	}
-}
-.panel {
-	.col-9 {
-		@media(max-width: $breakpoint-sm) {
-			padding-right: 0.5em !important;
-		}
-	}
-}
-.operators {
-	@media(max-width: $breakpoint-sm) {
-		padding-left: 0 !important;
-		padding-right: 0 !important;
 	}
 }
 .bg-actions {
