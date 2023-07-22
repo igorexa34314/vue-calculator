@@ -1,18 +1,14 @@
-import { Ref, ref, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
+import { getFromLocalStorage, saveToLocalStorage } from '@/utils/localStorage';
 
-export const useTabs = <T extends { name: string }[]>(tabs: T) => {
-	const activeTab = ref(tabs[0].name) as Ref<T[number]['name']>;
+const ACTIVE_TAB_KEY = 'activeTab';
 
-	const setActiveTab = () => {
-		if (localStorage.getItem('activeTab')) {
-			activeTab.value = JSON.parse(localStorage.getItem('activeTab') || '');
-		} else {
-			activeTab.value = tabs[0].name;
-		}
-	};
-	setActiveTab();
+export const useTabs = (initialTabName: string) => {
+	const activeTab = ref(getFromLocalStorage<string>(ACTIVE_TAB_KEY) ?? initialTabName);
 
-	watchEffect(() => localStorage.setItem('activeTab', JSON.stringify(activeTab.value)));
+	watchEffect(() => {
+		saveToLocalStorage(ACTIVE_TAB_KEY, activeTab.value);
+	});
 
 	return { activeTab };
 };

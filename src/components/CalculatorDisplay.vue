@@ -28,8 +28,8 @@ const props = withDefaults(defineProps<{
 });
 
 const exprValue = computed({
-	get: () => props.modelValue,
-	set: val => emit('update:modelValue', val),
+	get: () => ({ problem: props.modelValue.problem, result: props.modelValue.result.toString() }),
+	set: (val) => emit('update:modelValue', val),
 })
 </script>
 

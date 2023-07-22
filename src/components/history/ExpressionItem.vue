@@ -7,21 +7,19 @@
 		<q-item-section side>
 			<q-btn flat rounded text-color="icons" padding="sm" dense :icon="outlinedContentCopy"
 				@click="copyProblem(expression)"></q-btn>
-			<q-tooltip anchor="bottom middle" self="bottom middle" no-parent-event ref="copyMessage"
-				class="text-caption">Copied to clipboard</q-tooltip>
 		</q-item-section>
 		<q-item-section side>
-			<q-btn flat rounded text-color="icons" padding="sm" dense :icon="matDelete" @click="emit('deleteItem', expression)" />
+			<q-btn flat rounded text-color="icons" padding="sm" dense :icon="matDelete"
+				@click="emit('deleteItem', expression)" />
 		</q-item-section>
 	</q-item>
 </template>
 
 <script setup lang="ts">
-import { matDelete } from '@quasar/extras/material-icons';
+import { matDelete, matClose, matCheckCircle, matWarning } from '@quasar/extras/material-icons';
 import { outlinedContentCopy } from '@quasar/extras/material-icons-outlined';
-import { ref } from 'vue';
-import { QTooltip } from 'quasar';
 import { Expression } from '@/types/Expression';
+import { useQuasar } from 'quasar';
 
 const props = defineProps<{
 	expression: Expression
@@ -32,14 +30,28 @@ const emit = defineEmits<{
 	(e: 'deleteItem', exp: Expression): void;
 }>();
 
-const copyMessage = ref<QTooltip>();
+const { notify } = useQuasar();
 const copyProblem = async (exp: Expression) => {
 	try {
 		await navigator.clipboard.writeText(exp.problem + ' = ' + exp.result);
-		copyMessage.value?.show();
-		setTimeout(() => copyMessage.value?.hide(), 2000);
+		notify({
+			message: 'Copied to clipboard',
+			type: 'positive',
+			icon: matCheckCircle,
+			actions: [
+				{ icon: matClose, color: 'white', size: 'sm', round: true }
+			]
+		});
 	} catch (err) {
-		alert('Failed to copy');
+		console.error(err);
+		notify({
+			message: 'Copied to clipboard',
+			type: 'negative',
+			icon: matWarning,
+			actions: [
+				{ icon: matClose, size: 'sm', color: 'white', round: true }
+			]
+		});
 	}
 }
 </script>
