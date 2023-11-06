@@ -15,7 +15,7 @@
 				:placeholder="freeMode ? 'Type your full expression' : ''" />
 		</div>
 		<div class="display__input row no-wrap items-center" :class="freeMode ? 'q-mt-md' : ''">
-			<span class="equals col-1">=</span>
+			<span class="equals col-1">{{ '=' }}</span>
 			<q-input v-model="expression.result" class="q-pl-lg col-11" input-class="result" borderless dense readonly />
 		</div>
 	</div>
@@ -64,17 +64,16 @@ const expression = computed({
 		}
 		input,
 		textarea {
+			text-align: right;
 			caret-color: #373737;
 		}
 		textarea {
 			line-height: 1.33 !important;
 		}
-		input {
-			text-align: right;
-		}
 	}
 }
 .problem {
+	font-size: 1.33em;
 	color: rgba(55, 55, 55, 0.5) !important;
 	@media (max-width: 380px) {
 		font-size: 0.85em;

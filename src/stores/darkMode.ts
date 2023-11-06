@@ -7,9 +7,13 @@ export const useDarkModeStore = defineStore('darkMode', () => {
 	const darkMode = useLocalStorage<boolean>('darkMode', import.meta.env.VITE_APP_THEME === 'dark');
 	const $q = useQuasar();
 
-	watch(darkMode, newVal => {
-		$q.dark.set(newVal);
-	});
+	watch(
+		darkMode,
+		newVal => {
+			$q.dark.set(newVal);
+		},
+		{ immediate: true }
+	);
 
 	return { darkMode };
 });

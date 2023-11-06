@@ -24,7 +24,9 @@ env:
    VITE_BASE: /${{ github.event.repository.name }}/
    VITE_PORT: 3000
    VITE_APP_TITLE: "Vue Calculator"
-   VITE_APP_TITLE: "en"
+   VITE_APP_LANG: "en"
+   VITE_APP_THEME: "dark"
+   
 jobs:
    # Single deploy job since we're just deploying
    deploy:

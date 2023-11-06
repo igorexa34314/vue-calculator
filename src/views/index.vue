@@ -30,8 +30,8 @@
 				<q-tabs
 					dense
 					v-model="activeTab"
-					class="bg-none text-accent shadow-none"
-					content-class="calculator-tabs"
+					class="bg-none shadow-none text-accent"
+					content-class="calculator-tabs "
 					shrink>
 					<q-route-tab
 						v-for="tab in tabs"
@@ -206,6 +206,9 @@ const { expression, applyCharToExp, showExpression, deleteExpression } = useExpr
 }
 .text-icons {
 	color: rgba(55, 55, 55, 0.8) !important;
+}
+.text-accent {
+	color: $accent !important;
 }
 .panel-decor {
 	left: 50%;
