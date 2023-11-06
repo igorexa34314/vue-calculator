@@ -21,12 +21,12 @@ node_modules
 *.sln
 *.sw?
 
-#Env vars
+#Environment variables
 .env
 .env.dev
 *.local
 
-#Yarn
+#Yarn PnP
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -34,3 +34,6 @@ node_modules
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# rollup-plugin-visualizer
+bundle-stats.html

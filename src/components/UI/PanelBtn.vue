@@ -1,22 +1,38 @@
 <template>
-	<q-btn round dense class="panel-btn" @click="emit('btnClick', value)" color="btn" text-color="btn-color" size="1em"
+	<q-btn
+		round
+		dense
+		class="panel-btn"
+		@click="emit('click', value as T)"
+		color="btn"
+		text-color="btn-color"
+		size="1em"
 		no-caps>
-		<slot />
+		<template #default>
+			<slot name="default"></slot>
+		</template>
+		<template #loading>
+			<slot name="loading"></slot>
+		</template>
 	</q-btn>
 </template>
 
-<script setup lang="ts">
-const props = defineProps<{
-	value: string
+<script setup lang="ts" generic="T extends string">
+import { QBtnSlots } from 'quasar';
+
+const { value } = defineProps<{
+	value: T;
 }>();
 
 const emit = defineEmits<{
-	(e: 'btnClick', value: typeof props.value): void
+	click: [value: T];
 }>();
+
+const slot = defineSlots<QBtnSlots>();
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/variables";
+@import '@/assets/styles/variables';
 .bg-btn {
 	background-color: $btn !important;
 }
@@ -25,7 +41,7 @@ const emit = defineEmits<{
 }
 .body--dark {
 	.text-btn-color {
-		color: #FBFBFB !important;
+		color: #fbfbfb !important;
 	}
 	.bg-btn {
 		background-color: $btn-dark !important;

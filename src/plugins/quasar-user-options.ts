@@ -5,8 +5,8 @@ export default {
 		notify: {
 			position: 'top',
 			group: true,
-			timeout: 1000
-		}
+			timeout: 1000,
+		},
 	},
-	plugins: { Notify }
+	plugins: { Notify },
 } as QuasarPluginOptions;
