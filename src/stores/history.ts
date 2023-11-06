@@ -1,24 +1,23 @@
 import { defineStore } from 'pinia';
-import { ref, watchEffect } from 'vue';
-import { Expression } from '@/types/Expression';
-import { saveToLocalStorage, getFromLocalStorage } from '@/utils/localStorage';
+import { useLocalStorage } from '@vueuse/core';
+
+export interface Expression {
+	problem: string;
+	result: number | string;
+}
 
 export const useHistoryStore = defineStore('history', () => {
-	const problemItems = ref<Expression[]>(getFromLocalStorage('history') || []);
+	const problemItems = useLocalStorage<Expression[]>('history', []);
 
 	const addProblemItem = (problemItem: Expression) => {
-		for (let item of problemItems.value) {
-			if (item.problem === problemItem.problem) return;
+		if (!problemItems.value.some(item => item.problem === problemItem.problem)) {
+			problemItems.value = [...problemItems.value, problemItem];
 		}
-		problemItems.value.push(problemItem);
 	};
+
 	const deleteProblemItem = (problemItem: Expression) => {
 		problemItems.value = problemItems.value.filter(item => item.problem !== problemItem.problem);
 	};
-
-	watchEffect(() => {
-		saveToLocalStorage('history', problemItems.value);
-	});
 
 	return { problemItems, addProblemItem, deleteProblemItem };
 });

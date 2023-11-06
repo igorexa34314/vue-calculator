@@ -34,3 +34,6 @@ node_modules
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# rollup-plugin-visualizer
+bundle-stats.html

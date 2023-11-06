@@ -1,17 +1,8 @@
 import { defineStore } from 'pinia';
-import { ref, watchEffect } from 'vue';
-import { saveToLocalStorage, getFromLocalStorage } from '@/utils/localStorage';
+import { useLocalStorage } from '@vueuse/core';
 
 export const useDarkModeStore = defineStore('darkMode', () => {
-	const darkMode = ref<boolean>(getFromLocalStorage('darkMode') ?? true);
+	const darkMode = useLocalStorage<boolean>('darkMode', import.meta.env.VITE_APP_THEME === 'dark');
 
-	const setDarkMode = (value: boolean) => {
-		darkMode.value = value;
-	};
-
-	watchEffect(() => {
-		saveToLocalStorage('darkMode', darkMode.value);
-	});
-
-	return { darkMode, setDarkMode };
+	return { darkMode };
 });

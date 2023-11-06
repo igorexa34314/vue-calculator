@@ -1,9 +1,7 @@
 <template>
 	<n-grid cols="4" x-gap="12" y-gap="12" class="panel row wrap justify-between items-stretch q-pb-sm">
 		<n-gi v-for="action in actions" :key="action" class="actions col-grow row no-wrap q-gutter-x-md justify-between">
-			<PanelBtn :value="action" @btnClick="enterCharacter">{{
-				action
-			}}</PanelBtn>
+			<PanelBtn :value="action" @click="(ch: string) => emit('enterChar', ch)">{{ action }}</PanelBtn>
 		</n-gi>
 	</n-grid>
 </template>
@@ -13,12 +11,10 @@ import { NGrid, NGi } from 'naive-ui';
 import PanelBtn from '@/components/UI/PanelBtn.vue';
 
 const emit = defineEmits<{
-	(e: 'enterCharacter', character: string): void
+	enterChar: [ch: string];
 }>();
 
 const actions = ['AC', '+/-', '%', '='];
-
-const enterCharacter = (ch: string) => emit('enterCharacter', ch);
 </script>
 
 <style lang="scss">

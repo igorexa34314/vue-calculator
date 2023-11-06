@@ -1,16 +1,15 @@
 import { ref } from 'vue';
-import { evaluate, round } from 'mathjs';
-import { useHistoryStore } from '@/stores/history';
-import { Expression } from '@/types/Expression';
+import { useHistoryStore, Expression } from '@/stores/history';
+import { evaluate, round } from '@/utils/mathjs';
 
-export function useExpression() {
+export const useExpression = () => {
 	const { addProblemItem, deleteProblemItem } = useHistoryStore();
 
 	const operators = ['*', '/', '-', '+', '='];
 	const hasOperatorsInTheEnd = () => operators.some(el => expression.value.problem.endsWith(el));
 	const expression = ref<Expression>({
 		problem: '',
-		result: 0
+		result: 0,
 	});
 	const solveProblem = (): void | Boolean => {
 		try {
@@ -82,7 +81,7 @@ export function useExpression() {
 			case '.':
 				if (
 					!expression.value.problem
-						.split(/\s*[-+\/*]\s*/g)
+						.split(/\s*[-+/*]\s*/g)
 						.slice(-1)
 						.includes('.')
 				) {
@@ -105,7 +104,7 @@ export function useExpression() {
 		if (problem && !isNaN(+result) && result !== Infinity) {
 			const problemItem = {
 				problem,
-				result
+				result,
 			};
 			addProblemItem(problemItem);
 		}
@@ -115,6 +114,6 @@ export function useExpression() {
 		expression,
 		applyCharToExp,
 		showExpression,
-		deleteExpression
+		deleteExpression,
 	};
-}
+};

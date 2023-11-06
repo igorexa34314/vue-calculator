@@ -2,14 +2,20 @@
 	<n-grid cols="12" x-gap="12" y-gap="12" class="panel row wrap justify-between items-stretch q-pb-sm">
 		<n-gi span="9" class="col-9 column q-px-sm justify-between q-col-gutter-y-lg">
 			<n-grid cols="3" x-gap="12" y-gap="12">
-				<n-gi v-for="action in actions" :key="action"
+				<n-gi
+					v-for="action in actions"
+					:key="action"
 					class="actions col-grow row no-wrap q-gutter-x-md justify-between">
-					<PanelBtn :value="action" @btnClick="enterCharacter">{{
-						action }}</PanelBtn>
+					<PanelBtn :value="action" @click="(ch: string) => emit('enterChar', ch)">{{ action }}</PanelBtn>
 				</n-gi>
-				<n-gi v-for="num in numbers" :key="num"
+				<n-gi
+					v-for="num in numbers"
+					:key="num"
 					class="numbers col-grow row wrap items-start justify-between q-gutter-x-md q-gutter-y-lg">
-					<PanelBtn :value="num" v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}
+					<PanelBtn
+						:value="num"
+						v-on="!isNaN(+num) || num === '.' ? { click: (ch: string) => emit('enterChar', ch) } : {}"
+						>{{ num }}
 					</PanelBtn>
 				</n-gi>
 			</n-grid>
@@ -17,7 +23,7 @@
 		<n-gi span="3">
 			<n-grid cols="1" x-gap="12" y-gap="12">
 				<n-gi v-for="op in operators" :key="op">
-					<PanelBtn :value="op" @btnClick="enterCharacter" class="operators">{{
+					<PanelBtn :value="op" @click="(ch: string) => emit('enterChar', ch)" class="operators">{{
 						op
 					}}</PanelBtn>
 				</n-gi>
@@ -31,14 +37,12 @@ import { NGrid, NGi } from 'naive-ui';
 import PanelBtn from '@/components/UI/PanelBtn.vue';
 
 const emit = defineEmits<{
-	(e: 'enterCharacter', character: string): void
+	enterChar: [ch: string];
 }>();
 
 const actions = ['AC', '+/-', '%'];
 const operators = ['×', '÷', '-', '+', '='];
 const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '00'];
-
-const enterCharacter = (ch: string) => emit('enterCharacter', ch);
 </script>
 
 <style lang="scss">

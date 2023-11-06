@@ -1,8 +1,7 @@
 <template>
-	<n-button circle class="panel-btn" @click="emit('btnClick', value)" :theme-overrides="buttonThemeOverrides" size="large"
-		block>
+	<n-button circle @click="emit('click', value)" :theme-overrides="buttonThemeOverrides" size="large" block>
 		<template #default>
-			<slot />
+			<slot></slot>
 		</template>
 		<template v-if="icon" #icon>
 			<n-icon :component="icon" />
@@ -11,54 +10,32 @@
 </template>
 
 <script setup lang="ts">
-import { Component } from 'vue';
+import { Component, computed } from 'vue';
 import { NButton, NIcon, ButtonProps } from 'naive-ui';
-
-type ButtonThemeOverrides = NonNullable<ButtonProps['themeOverrides']>
+import { useDarkModeStore } from '@/stores/darkMode';
 
 const props = defineProps<{
-	value: string,
-	icon?: Component
+	value: string;
+	icon?: Component;
 }>();
 
 const emit = defineEmits<{
-	(e: 'btnClick', value: typeof props.value): void
+	click: [value: typeof props.value];
 }>();
 
-const buttonThemeOverrides: ButtonThemeOverrides = {
-	// heightMedium: '50px',
-	heightLarge: '55px',
-	borderRadiusLarge: '50%',
+const darkModeStore = useDarkModeStore();
 
-	// textColor: 'rgba(24, 127, 231, 0.5)'
-}
+const buttonThemeOverrides = computed(
+	() =>
+		({
+			heightMedium: '2.5em',
+			heightLarge: '2.35em',
+			borderRadiusLarge: '50%',
+			fontSizeMedium: '0.9em',
+			fontSizeSmall: '0.75em',
+			...(darkModeStore.darkMode
+				? { color: 'rgba(5, 5, 5, 0.3)', textColor: '#FBFBFB' }
+				: { color: 'rgba(255, 255, 255, 0.3)', textColor: '#373737' }),
+		}) as NonNullable<ButtonProps['themeOverrides']>
+);
 </script>
-
-<style lang="scss">
-.panel-btn {
-	width: 2.5em;
-	height: 2.5em;
-	@media(max-width: 450px) {
-		width: 2.35em;
-		height: 2.35em;
-		font-size: 0.9em;
-	}
-	@media(max-width: 360px) {
-		font-size: 0.75em;
-	}
-}
-// .bg-btn {
-// 	background-color: $btn !important;
-// }
-// .text-btn-color {
-// 	color: #373737 !important;
-// }
-// .body--dark {
-// 	.text-btn-color {
-// 		color: #FBFBFB !important;
-// 	}
-// 	.bg-btn {
-// 		background-color: $btn-dark !important;
-// 	}
-// }
-</style>
