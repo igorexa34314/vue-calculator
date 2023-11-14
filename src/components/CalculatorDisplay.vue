@@ -1,14 +1,18 @@
 <template>
 	<div class="display column no-wrap">
 		<div class="display__input row">
-			<q-input ref="problemInput" v-model.trim="exprValue.problem" class="col-grow" input-class="problem" borderless
-				:dense="!freeMode" autocomplete="off" :autofocus="freeMode" :readonly="!freeMode" :autogrow="freeMode"
-				:placeholder="freeMode ? 'Type your full expression' : ''" />
+			<v-text-field ref="problemInput" v-model.trim="exprValue.problem" class="col-grow" input-class="problem"
+				:density="!freeMode ? 'comfortable' : 'default'" autocomplete="off" :autofocus="freeMode" :readonly="!freeMode"
+				:autogrow="freeMode" :placeholder="freeMode ? 'Type your full expression' : ''" />
 		</div>
-		<div class="display__input row no-wrap items-center" :class="freeMode ? 'q-mt-md' : ''">
-			<span class="equals col-1">=</span>
-			<q-input v-model="exprValue.result" class="q-pl-lg col-11" input-class="result" borderless dense readonly />
-		</div>
+		<v-row class="display__input" align="center" :class="freeMode ? 'mt-4' : ''">
+			<v-col cols="11" class="equals">
+				<span>=</span>
+			</v-col>
+			<v-col cols="1" class="result pl-6">
+				<v-text-field v-model="exprValue.result" readonly density="comfortable" />
+			</v-col>
+		</v-row>
 	</div>
 </template>
 
@@ -34,24 +38,10 @@ const exprValue = computed({
 </script>
 
 <style lang="scss">
-.body--dark {
-	.problem {
-		color: rgba(251, 251, 251, 0.5) !important;
-	}
-	.result {
-		color: #FBFBFB !important;
-	}
-	.display__input input, textarea {
-		caret-color: #FBFBFB;
-	}
-}
 .display {
 	&__input {
 		&:not(:last-child) {
 			margin-bottom: 8px;
-		}
-		input, textarea {
-			caret-color: #373737;
 		}
 		textarea {
 			line-height: 1.33 !important;
@@ -62,7 +52,6 @@ const exprValue = computed({
 	}
 }
 .problem {
-	color: rgba(55, 55, 55, 0.5) !important;
 	@media(max-width: 380px) {
 		font-size: 0.85em;
 	}

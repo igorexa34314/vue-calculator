@@ -1,44 +1,43 @@
 <template>
-	<div class="column q-col-gutter-y-lg">
-		<div class="panel row wrap justify-between items-center q-col-gutter-lg">
-			<div class="col-9 column justify-between q-col-gutter-y-lg">
+	<div class="d-flex flex-column">
+		<v-row class="panel" align="center" justify="space-between">
+			<v-col cols="9" class="column justify-between q-col-gutter-y-lg">
 				<div class="actions col-grow row no-wrap q-gutter-x-md justify-between">
 					<PanelBtn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions"
-						:icon="action === 'bs' ? outlinedBackspace : undefined">{{ action !== 'bs' ? action : '' }}</PanelBtn>
+						:icon="action === 'bs' ? mdiBackspaceOutline : undefined">{{ action !== 'bs' ? action : '' }}</PanelBtn>
 				</div>
 				<div class="numbers col-grow row wrap items-start justify-between q-gutter-x-md q-gutter-y-lg">
 					<PanelBtn v-for="num in numbers.slice(0, 9)" :key="num" :value="num"
 						v-on="!isNaN(+num) || num === '.' ? { btnClick: enterCharacter } : {}">{{ num }}</PanelBtn>
 				</div>
-			</div>
-			<div class="operators col-3 column q-gutter-y-lg items-end">
+			</v-col>
+			<v-col cols="3" class="operators d-flex flex-column align-end">
 				<PanelBtn v-for="op in operators" :key="op.name" :value="op.name" @btnClick="enterCharacter" color="operators"
 					:icon="op.icon || undefined">{{ op.icon ? '' : op.name }}</PanelBtn>
-			</div>
-		</div>
-		<div class="specs col-12  row no-wrap justify-between q-gutter-x-lg">
+			</v-col>
+		</v-row>
+		<v-row class="specs d-flex flex-nowrap justify-between">
 			<PanelBtn v-for="spec in numbers.slice(9)" :key="spec" :value="spec" @btnClick="enterCharacter">
 				{{ spec }}</PanelBtn>
-		</div>
-		<div class="trigonometry col-12  row no-wrap justify-between q-gutter-x-lg">
+		</v-row>
+		<v-row class="trigonometry d-flex flex-nowrap justify-between">
 			<PanelBtn v-for="trg in trigonometry" :key="trg" :value="trg" @btnClick="enterCharacter">{{ trg }}</PanelBtn>
-		</div>
+		</v-row>
 	</div>
 </template>
 
 <script setup lang="ts">
 import PanelBtn from '@/components/UI/PanelBtn.vue';
-import { fasSquareRootVariable, fasAngleUp } from '@quasar/extras/fontawesome-v6';
-import { outlinedBackspace } from '@quasar/extras/material-icons-outlined';
+import { mdiBackspaceOutline, mdiSquareRoot, mdiExponent } from '@mdi/js';
 
 const emit = defineEmits<{
-	(e: 'enterCharacter', character: string): void
+	enterCharacter: [character: string]
 }>();
 
 const actions = ['AC', 'bs', 'e'];
 const operators = [
-	{ name: 'sqrt', icon: fasSquareRootVariable },
-	{ name: '^', icon: fasAngleUp },
+	{ name: 'sqrt', icon: mdiSquareRoot },
+	{ name: '^', icon: mdiExponent },
 	{ name: 'log' },
 	{ name: 'exp' },
 ];
@@ -47,22 +46,3 @@ const trigonometry = ['sin', 'cos', 'tan', '='];
 
 const enterCharacter = (ch: string) => emit('enterCharacter', ch);
 </script>
-
-<style lang="scss">
-.body--dark {
-	.bg-operators {
-		background-color: $blue-grey-8 !important;
-	}
-}
-.bg-actions {
-	background-color: rgba(104, 94, 190, 0.3) !important;
-}
-.bg-operators {
-	background-color: $blue-grey-2 !important;
-}
-.operators button, .actions button {
-	.q-icon {
-		font-size: 1em !important;
-	}
-}
-</style>

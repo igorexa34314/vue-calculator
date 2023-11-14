@@ -1,27 +1,21 @@
 <template>
-	<div class="panel row wrap justify-between items-stretch q-pb-sm">
-		<div class="actions col-grow row no-wrap q-gutter-x-md justify-between">
+	<v-row class="panel pb-3" justify="space-between" align="stretch">
+		<v-col class="actions">
 			<PanelBtn v-for="action in actions" :key="action" :value="action" @btnClick="enterCharacter" color="actions">{{
 				action
 			}}</PanelBtn>
-		</div>
-	</div>
+		</v-col>
+	</v-row>
 </template>
 
 <script setup lang="ts">
 import PanelBtn from '@/components/UI/PanelBtn.vue';
 
 const emit = defineEmits<{
-	(e: 'enterCharacter', character: string): void
+	enterCharacter: [character: string]
 }>();
 
 const actions = ['AC', '+/-', '%', '='];
 
 const enterCharacter = (ch: string) => emit('enterCharacter', ch);
 </script>
-
-<style lang="scss">
-.bg-actions {
-	background-color: rgba(104, 94, 190, 0.3) !important;
-}
-</style>

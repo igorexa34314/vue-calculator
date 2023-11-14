@@ -5,25 +5,24 @@
 		<div class="calculator__container container">
 			<div class="calculator__header row wrap items-center justify-center q-gutter-y-md">
 				<div class="theme__toggle col-8 row inline justify-end">
-					<q-toggle v-model="darkMode" size="110px" keep-color :checked-icon="outlinedDarkMode" color="blue"
-						:unchecked-icon="outlinedLightMode" />
+					<v-switch v-model="darkMode" :true-icon="mdiWeatherNight" color="blue" :false-icon="mdiWeatherSunny"
+						inset />
 				</div>
-				<div class="history__btn col-grow row inline justify-end"><q-btn dense size="lg" flat @click="drawer = !drawer"
-						text-color="icons" :icon="matUpdate" rounded></q-btn>
+				<div class="history__btn col-grow row inline justify-end">
+					<v-btn dense size="large" @click="drawer = !drawer" color="icons" :icon="mdiUpdate" />
 				</div>
-				<q-tabs dense v-model="activeTab" class="bg-none text-accent shadow-none" content-class="calculator-tabs"
-					shrink>
-					<q-tab v-for="tab in tabs" :key="tab.name" v-bind="tab" class="" content-class="calculator-tab" />
-				</q-tabs>
+				<v-tabs v-model="activeTab" class="calculator-tabs">
+					<v-tab v-for="tab in tabs" :key="tab.value" :value="tab.value" :text="tab.label" class="calculator-tab" />
+				</v-tabs>
 			</div>
-			<CalculatorDisplay class="calculator__display" :class="activeTab === 'freeMode' ? 'q-mb-lg' : ''"
-				v-model="expression" :free-mode="activeTab === 'freeMode' ? true : false" />
+			<CalculatorDisplay class="calculator__display" :class="activeTab === 'freeMode' ? '' : ''" v-model="expression"
+				:free-mode="activeTab === 'freeMode'" />
 			<div class="calculator__body">
-				<q-tab-panels v-model="activeTab" class="q-pa-none bg-transparent" animated swipeable>
-					<q-tab-panel v-for="tab in tabs" :key="tab.name" :name="tab.name" class="q-pa-none">
+				<v-window v-model="activeTab" class="q-pa-none bg-transparent" animated swipeable>
+					<v-window-item v-for="tab in tabs" :key="tab.value" :value="tab.value" class="">
 						<component :is="tab.component" class="calculator__panel" @enterCharacter="applyCharToExp" />
-					</q-tab-panel>
-				</q-tab-panels>
+					</v-window-item>
+				</v-window>
 				<div class="calculator__footer">
 					<div class="calculator__decor"><span></span></div>
 				</div>
@@ -40,8 +39,7 @@ import AdvancedPanel from '@/components/panels/AdvancedPanel.vue';
 import FreeModePanel from '@/components/panels/FreeModePanel.vue';
 import CalculatorDisplay from '@/components/CalculatorDisplay.vue';
 import HistorySidebar from '@/components/history/HistorySidebar.vue';
-import { matUpdate } from '@quasar/extras/material-icons';
-import { outlinedLightMode, outlinedDarkMode } from '@quasar/extras/material-icons-outlined';
+import { mdiUpdate, mdiWeatherSunny, mdiWeatherNight } from '@mdi/js';
 import { ref, computed } from 'vue';
 import { useHistoryStore } from '@/stores/history';
 import { useExpression } from '@/composables/useExpression';
@@ -58,37 +56,17 @@ const drawer = ref(false);
 const { darkMode } = useDarkMode();
 
 const tabs = [
-	{ name: Tabs.BASE, label: 'Base', component: BasePanel },
-	{ name: Tabs.ADVANCED, label: 'Advanced', component: AdvancedPanel },
-	{ name: Tabs.FREEMODE, label: 'Free Mode', component: FreeModePanel },
+	{ value: Tabs.BASE, label: 'Base', component: BasePanel },
+	{ value: Tabs.ADVANCED, label: 'Advanced', component: AdvancedPanel },
+	{ value: Tabs.FREEMODE, label: 'Free Mode', component: FreeModePanel },
 ];
 
-const { activeTab } = useTabs(tabs[0].name);
+const { activeTab } = useTabs(tabs[0].value);
 
 const { expression, applyCharToExp, showExpression, deleteExpression } = useExpression();
 </script>
 
 <style lang="scss">
-.body--dark {
-	.calculator {
-		background: linear-gradient(166.34deg, #373737 0%, #252628 22.9%, #000309 100%);
-		box-shadow: 0px 4px 4px rgba(144, 132, 132, 0.241);
-		&__decor span {
-			background: #3D76AB;
-		}
-	}
-	.text-icons {
-		color: #FBFBFB !important;
-	}
-	.text-accent {
-		color: #FBFBFB !important;
-	}
-	.panel-decor {
-		transform: translateX(-70%);
-		opacity: 0.75;
-		background: linear-gradient(166.34deg, #373737 0%, #252628 22.9%, #000309 100%);
-	}
-}
 .calculator {
 	position: relative;
 	overflow: hidden;

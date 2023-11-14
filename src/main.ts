@@ -1,11 +1,10 @@
 import { createApp } from 'vue';
 import App from '@/App.vue';
-import { createPinia } from 'pinia';
-import { Quasar } from 'quasar';
-import quasarUserOptions from '@/plugins/quasar-user-options';
+import vuetify from '@/plugins/vuetify';
+import pinia from '@/plugins/pinia';
 
 const app = createApp(App);
 
-app.use(Quasar, quasarUserOptions).use(createPinia());
+app.use(vuetify).use(pinia);
 
 app.mount('#app');

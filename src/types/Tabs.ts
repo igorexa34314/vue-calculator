@@ -1,4 +1,4 @@
-export const enum Tabs {
+export enum Tabs {
 	BASE = 'base',
 	ADVANCED = 'advanced',
 	FREEMODE = 'freeMode'

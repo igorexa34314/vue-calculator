@@ -1,5 +1,6 @@
 <template>
-	<div class="decor-elipse"><svg viewBox="0 0 423 507" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<div class="decor-elipse">
+		<svg viewBox="0 0 423 507" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<g filter="url(#filter0_f_366_2)">
 				<path
 					d="M697.404 -24.1603C819.447 325.921 820.324 583.616 315.636 503.575C-7.67763 350.43 -155.022 587.082 -481.876 488.638C-246.465 -103.199 -160.092 354.76 45.0564 266.06C300.809 155.479 136.128 -793.125 697.404 -24.1603Z"

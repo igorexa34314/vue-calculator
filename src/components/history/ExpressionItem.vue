@@ -1,77 +1,53 @@
 <template>
-	<q-item clickable class="expr-item q-pa-sm">
-		<q-item-section v-ripple class="q-pa-md" @click="emit('runItem', expression)">
-			<q-item-label lines="2" class="expr-item__problem q-mb-xs">{{ expression.problem + ' = ' }}</q-item-label>
-			<q-item-label lines="1" class="expr-item__result">{{ expression.result }}</q-item-label>
-		</q-item-section>
-		<q-item-section side>
-			<q-btn flat rounded text-color="icons" padding="sm" dense :icon="outlinedContentCopy"
-				@click="copyProblem(expression)"></q-btn>
-		</q-item-section>
-		<q-item-section side>
-			<q-btn flat rounded text-color="icons" padding="sm" dense :icon="matDelete"
-				@click="emit('deleteItem', expression)" />
-		</q-item-section>
-	</q-item>
+	<v-list-item class="expr-item pa-3" @click="emit('runItem', expression)">
+		<v-list-item-subtitle class="expr-item__problem q-mb-xs">{{ expression.problem + ' = ' }}</v-list-item-subtitle>
+		<v-list-item-title class="expr-item__result">{{ expression.result }}</v-list-item-title>
+		<v-list-item-action end>
+			<v-btn rounded color="icons" padding="sm" :icon="mdiContentCopy" @click="copyProblem(expression)" />
+		</v-list-item-action>
+		<v-list-item-action end>
+			<v-btn rounded color="icons" padding="sm" :icon="mdiDelete" @click="emit('deleteItem', expression)" />
+		</v-list-item-action>
+	</v-list-item>
 </template>
 
 <script setup lang="ts">
-import { matDelete, matClose, matCheckCircle, matWarning } from '@quasar/extras/material-icons';
-import { outlinedContentCopy } from '@quasar/extras/material-icons-outlined';
+import { mdiDelete, mdiContentCopy } from '@mdi/js';
 import { Expression } from '@/types/Expression';
-import { useQuasar } from 'quasar';
+import { useSnackbarStore } from '@/stores/snackbar';
 
 const props = defineProps<{
 	expression: Expression
 }>();
 
 const emit = defineEmits<{
-	(e: 'runItem', exp: Expression): void;
-	(e: 'deleteItem', exp: Expression): void;
+	runItem: [exp: Expression]
+	deleteItem: [exp: Expression]
 }>();
 
-const { notify } = useQuasar();
+const { notify } = useSnackbarStore();
 const copyProblem = async (exp: Expression) => {
 	try {
 		await navigator.clipboard.writeText(exp.problem + ' = ' + exp.result);
 		notify({
 			message: 'Copied to clipboard',
-			type: 'positive',
-			icon: matCheckCircle,
-			actions: [
-				{ icon: matClose, color: 'white', size: 'sm', round: true }
-			]
+			type: 'success',
 		});
 	} catch (err) {
 		console.error(err);
 		notify({
 			message: 'Copied to clipboard',
-			type: 'negative',
-			icon: matWarning,
-			actions: [
-				{ icon: matClose, size: 'sm', color: 'white', round: true }
-			]
+			type: 'error',
 		});
 	}
 }
 </script>
 
 <style lang="scss" scoped>
-.body--dark {
-	.expr-item {
-		&__problem {
-			color: rgba(251, 251, 251, 0.5) !important;
-		}
-		&__result {
-			color: #FBFBFB !important;
-		}
-	}
-}
 .expr {
 	&-item {
 		&__problem {
 			font-size: 0.7em;
-			color: rgba(55, 55, 55, 0.5) !important;
 			@media(max-width: 380px) {
 				font-size: 0.6em;
 			}

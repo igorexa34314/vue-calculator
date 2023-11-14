@@ -1,9 +1,9 @@
 <template>
-  <q-layout class="app" view="hHh lpR fFf">
-    <q-page-container>
+  <v-layout class="app">
+    <v-main>
       <MyCalculator />
-    </q-page-container>
-  </q-layout>
+    </v-main>
+  </v-layout>
 </template>
 
 <script setup lang="ts">
@@ -11,8 +11,6 @@ import MyCalculator from '@/views/MyCalculator.vue';
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/variables.scss";
-
 .app {
   padding: 15px;
   min-height: 100vh;

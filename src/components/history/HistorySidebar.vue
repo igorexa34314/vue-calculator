@@ -1,10 +1,9 @@
 <template>
-	<q-drawer v-model="drawerOpen" class="bg-sidebar" side="right" :width="450" :breakpoint="1024" overlay elevated
-		persistent>
-		<q-scroll-area class="fit">
-			<ExpressionList :items="historyData" @deleteItem="exprItem => $emit('deleteItem', exprItem)" @runItem="runItem" />
-		</q-scroll-area>
-	</q-drawer>
+	<v-navigation-drawer v-model="drawerOpen" color="sidebar" location="right" width="450px" temporary>
+		<v-virtual-scroll>
+			<ExpressionList :items="historyData" @deleteItem="exprItem => emit('deleteItem', exprItem)" @runItem="runItem" />
+		</v-virtual-scroll>
+	</v-navigation-drawer>
 </template>
 
 <script setup lang="ts">
@@ -12,18 +11,18 @@ import ExpressionList from '@/components/history/ExpressionList.vue';
 import { computed } from 'vue';
 import { Expression } from '@/types/Expression';
 
-const emit = defineEmits<{
-	(e: 'update:drawer', value: boolean): void;
-	(e: 'runItem', exp: Expression): void;
-	(e: 'deleteItem', exp: Expression): void;
-}>();
-
 const props = withDefaults(defineProps<{
 	historyData: Expression[],
 	drawer?: boolean,
 }>(), {
 	drawer: false,
 });
+
+const emit = defineEmits<{
+	'update:drawer': [value: boolean]
+	runItem: [exp: Expression]
+	deleteItem: [exp: Expression]
+}>();
 
 const drawerOpen = computed({
 	get: () => props.drawer,
@@ -34,14 +33,3 @@ const runItem = (exprItem: Expression) => {
 	emit('update:drawer', false);
 };
 </script>
-
-<style lang="scss">
-.body--dark {
-	.bg-sidebar {
-		background-color: rgba(51, 38, 38, 0.5);
-	}
-}
-.bg-sidebar {
-	background-color: $secondary;
-}
-</style>

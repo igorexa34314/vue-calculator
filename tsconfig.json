@@ -13,6 +13,7 @@
 		"skipLibCheck": true,
 		"noEmit": true,
 		"baseUrl": ".",
+		"types": ["vuetify"],
 		"paths": {
 			"@/*": ["src/*"]
 		}
